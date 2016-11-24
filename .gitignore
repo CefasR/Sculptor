@@ -37,4 +37,8 @@
 # CodeBlocksFiles
 
 *.layout
-*.depend 
+*.depend
+
+# Gir
+
+.git/
