@@ -33,3 +33,8 @@
 
 # DevFiles
 *.dev
+
+# CodeBlocksFiles
+
+*.layout
+*.depend 
