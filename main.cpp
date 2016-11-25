@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-
+/*
   Voxel ***matriz = new Voxel**[30];
 
   for (int i = 0; i < 30; i++)
@@ -65,5 +65,5 @@ int main(){
       }
     }
   }
-
+*/
 }
