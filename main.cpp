@@ -20,9 +20,9 @@ int main(){
   Esfera *a = new Esfera(10, 10, 15, 0.2, 0.0, 0.1, 1.0, true, 9);
   Caixa *b = new Caixa(10, 10, 15, 1.0, 1.0, 1.0, 1.0, true, 5, 5, 30);
 
-  unsigned int q = a->esculpir(matriz);
-  q += b->esculpir(matriz);
-  // b->esculpir(matriz);
+  unsigned int q = a->sculpt(matriz);
+  q += b->sculpt(matriz);
+  // b->sculpt(matriz);
 
   arquivo << "OFF \n" << 8 * q << " " << 6 * q << " " << 0 << endl;
 
