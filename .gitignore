@@ -34,6 +34,9 @@
 # DevFiles
 *.dev
 
+# Makefile
+makefile
+
 # CodeBlocksFiles
 
 *.layout
