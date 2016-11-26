@@ -3,6 +3,11 @@
 using namespace std;
 
 int main(){
+  Sculptor sculptor;
+
+  sculptor.putBox(0, 3, 0, 3, 0, 3);
+
+  sculptor.write("as");
 /*
   Voxel ***matriz = new Voxel**[30];
 

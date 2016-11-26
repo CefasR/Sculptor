@@ -47,6 +47,8 @@ public:
     pos.x += x; pos.y += y; pos.z += z;
   }
 
+  inline virtual ~Solid() {}
+
 };
 
 
@@ -62,7 +64,7 @@ public:
     bool on=true,
     // Largura (eixo x) | Comprimento (eixo y) | Altura (eixo z)
     unsigned int w=1, unsigned int l=1, unsigned int h=1
-  ) : Solid(x, y, z, r, g, b, a, on), width(w), length(l), height(w) {}
+  ) : Solid(x, y, z, r, g, b, a, on), width(w), length(l), height(w) { }
 
   // sculpt a Solid
   void sculpt(Canvas& c) const;

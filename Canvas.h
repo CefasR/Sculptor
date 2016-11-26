@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include "Solids.h"
 using namespace std;
 
 // Estrutura de dados que contém as informações do voxel
@@ -30,7 +31,30 @@ struct POS_3D {
 
   POS_3D (T px=0, T py=0, T pz=0): x(px), y(py), z(pz) { }
 
-  inline friend ofstream & operator << (ofstream & out, const POS_3D & pos) { out << pos.x << " " << pos.y << " " << pos.z; return out; }
+  inline friend ostream & operator << (ostream & out, const POS_3D <T> & pos) { out << pos.x << " " << pos.y << " " << pos.z; return out; }
+
+  template <class T2>
+  POS_3D (POS_3D <T2> pos) {
+    x = pos.x; y = pos.y; z = pos.z;
+  }
+
+  inline POS_3D operator+ (POS_3D pos) {
+    x += pos.x; y += pos.y; z += pos.z;
+    return *this;
+  }
+
+  inline POS_3D operator- (POS_3D pos) {
+    return (*this) + (-pos);
+  }
+
+  inline friend POS_3D operator- (POS_3D pos) {
+    pos.x = -pos.x; pos.y = -pos.y; pos.z = -pos.z;
+    return pos;
+  }
+
+  inline bool operator==(POS_3D pos) {
+    return (x == pos.x && y == pos.y && z == pos.z);
+  }
 };
 
 typedef vector<Voxel>::iterator VoxelIterator;
