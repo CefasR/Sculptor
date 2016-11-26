@@ -31,6 +31,8 @@ struct POS_3D {
   POS_3D (T px=0, T py=0, T pz=0): x(px), y(py), z(pz) { }
 };
 
+typedef vector<Voxel>::iterator VoxelIterator;
+
 // Classe que auxilia na manipulação de uma matriz 3D de voxels
 class Canvas {
 protected:
@@ -70,7 +72,14 @@ public:
   }
 
   // Retorna a quantidade de vértices do canvas
+  inline unsigned getNVertices() { return (dimX + 1) * (dimY + 1) * (dimZ + 1); }
 
+  // Retorna a quantidade de faces do canvas
+  inline unsigned getNEdges() {
+    unsigned qtd(0);
+    for (VoxelIterator i = x.begin();  i != x.end(); ++i) if ((*i).is_on) ++qtd;
+    return qtd;
+  }
 };
 
 #endif //_CANVAS_H_
