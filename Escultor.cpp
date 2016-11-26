@@ -17,7 +17,6 @@ void Box::sculpt(Canvas& c) const
   }
 }
 
-
 unsigned int Box::getMaxX() const {
 
 }
@@ -36,7 +35,6 @@ unsigned int Box::getMinY() const {
 unsigned int Box::getMinZ() const {
 
 }
-
 
 void Sphere::sculpt(Canvas& c) const
 {

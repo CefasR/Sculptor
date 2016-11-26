@@ -51,7 +51,6 @@ public:
   inline Voxel & at(unsigned i, unsigned j, unsigned k) {
     return x.at(i * dimX + j * dimY + k);
   }
-
 };
 
 class Solid : protected Voxel {
