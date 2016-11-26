@@ -39,19 +39,22 @@ protected:
   unsigned int dimX, dimY, dimZ;
   vector <Voxel> x;
   POS_3D <int> minXYZ;
+  
+  // Inicializa o canvas com os tamanhos especificados
+  inline void initialize(unsigned dx, unsigned dy, unsigned dz, int mx=0, int my=0, int mz=0)
+  {
+    minXYZ = POS_3D <int> (mx, my, mz); dimX = unsigned(dx); dimY = unsigned(dy); dimZ = unsigned(dz);
+    // Iniciaza o vetor com todos os voxeis
+    if (dimX * dimX * dimX > 0)
+      x = vector <Voxel> (dimX * dimY * dimZ, Voxel());
+  }
 public:
   friend inline int Location(unsigned int NC,unsigned int NP, int i, int j, int k) {
     int n = (NC*NP*i + NP*j + k);
     return n;
   }
 
-  // Inicializa o canvas com os tamanhos especificados
-  inline void initialize(unsigned dx, unsigned dy, unsigned dz, int mx=0, int my=0, int mz=0)
-  {
-    minXYZ = POS_3D <int> (mx, my, mz); dimX = unsigned(dx); dimY = unsigned(dy); dimZ = unsigned(dz);
-    // Iniciaza o vetror com todos os voxeis
-    x = vector <Voxel> (dimX * dimY * dimZ, Voxel());
-  }
+  inline Canvas (unsigned dx=0, unsigned dy=0, unsigned dz=0, int mx=0, int my=0, int mz=0) { initialize(dx, dy, dz, mx, my, mz); }
 
   // Retorna o elemento da posição espefificada considerando as coordenadas mínimas do canvas
   inline const Voxel & at(int i, int j, int k) const {
@@ -72,7 +75,7 @@ public:
   }
 
   // Retorna a quantidade de vértices do canvas
-  inline unsigned getNVertices() { return (dimX + 1) * (dimY + 1) * (dimZ + 1); }
+  inline unsigned getNVertices() const { return (dimX + 1) * (dimY + 1) * (dimZ + 1); }
 
   // Retorna a quantidade de faces do canvas
   inline unsigned getNEdges() {
