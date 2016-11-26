@@ -8,9 +8,9 @@
 using namespace std;
 
 
-class Sculptor : private Canvas{
+class Sculptor : protected Canvas{
 private:
-    list<pSolid> x;
+    list<pSolid> l;
 public:
     void setColor(float R, float G, float B, float A);
     void putVoxel(int X, int Y, int Z);
