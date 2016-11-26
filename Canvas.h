@@ -29,6 +29,8 @@ struct POS_3D {
   T x, y, z;
 
   POS_3D (T px=0, T py=0, T pz=0): x(px), y(py), z(pz) { }
+
+  inline friend ofstream & operator << (ofstream & out, const POS_3D & pos) { out << pos.x << " " << pos.y << " " << pos.z; return out; }
 };
 
 typedef vector<Voxel>::iterator VoxelIterator;
@@ -39,7 +41,7 @@ protected:
   unsigned int dimX, dimY, dimZ;
   vector <Voxel> x;
   POS_3D <int> minXYZ;
-  
+
   // Inicializa o canvas com os tamanhos especificados
   inline void initialize(unsigned dx, unsigned dy, unsigned dz, int mx=0, int my=0, int mz=0)
   {
@@ -54,24 +56,41 @@ public:
     return n;
   }
 
+  // Retorna a posição normalizada
+  inline const POS_3D <unsigned int> getNormalPos (int x, int y, int z) { return POS_3D <unsigned int> ( (x - minXYZ.x), (y - minXYZ.y), (z - minXYZ.z) ); }
+
   inline Canvas (unsigned dx=0, unsigned dy=0, unsigned dz=0, int mx=0, int my=0, int mz=0) { initialize(dx, dy, dz, mx, my, mz); }
 
-  // Retorna o elemento da posição espefificada considerando as coordenadas mínimas do canvas
+  // Retorna o elemento da posição espefificada
   inline const Voxel & at(int i, int j, int k) const {
-      return x.at( abs(
-        (i - minXYZ.x) * dimX * dimY +
-        (j - minXYZ.y) * dimY +
-        k - minXYZ.z
-      ));
+      return x.at (
+        i * dimX * dimY +
+        j * dimY + k
+      );
   }
 
-  // Retorna o elemento da posição espefificada considerando as coordenadas mínimas do canvas
+  // Retorna o elemento da posição espefificada
   inline Voxel & at(int i, int j, int k) {
-    return x.at( abs(
-      (i - minXYZ.x) * dimX * dimY +
-      (j - minXYZ.y) * dimY +
-      k - minXYZ.z
-    ));
+    return x.at (
+      i * dimX * dimY +
+      j * dimY + k
+    );
+  }
+
+  // Retorna o elemento da posição espefificada
+  inline const Voxel & at(const POS_3D <unsigned int> pos) const {
+      return x.at (
+        pos.x * dimX * dimY +
+        pos.y * dimY + pos.z
+      );
+  }
+
+  // Retorna o elemento da posição espefificada
+  inline Voxel & at(const POS_3D <unsigned int> pos) {
+    return x.at (
+      pos.x * dimX * dimY +
+      pos.y * dimY + pos.z
+    );
   }
 
   // Retorna a quantidade de vértices do canvas

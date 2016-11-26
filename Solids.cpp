@@ -10,7 +10,7 @@ void Box::sculpt(Canvas& c) const
         /*Surte o mesmo efeito que o código comentado acima
           funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
           que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-        c.at(i, j, k) = *this;
+        c.at(c.getNormalPos(i, j, k)) = *this;
       }
     }
   }
@@ -85,7 +85,7 @@ void Cylinder::sculpt(Canvas& c) const
                   /*Surte o mesmo efeito que o código comentado acima
                     funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
                     que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-                  c.at(i, j, k) = *this;;
+                  c.at(c.getNormalPos(i, j, k)) = *this;;
                 }
             }
         }
@@ -128,7 +128,7 @@ void Ellipsoid::sculpt(Canvas& c) const{
           /*Surte o mesmo efeito que o código comentado acima
             funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
             que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-          c.at(i, j, k) = *this;
+          c.at(c.getNormalPos(i, j, k)) = *this;
         }
       }
     }
