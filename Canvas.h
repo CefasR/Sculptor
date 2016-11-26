@@ -43,10 +43,18 @@ public:
     return n;
   }
 
+  // Inicializa o canvas com os tamanhos especificados
+  inline void initialize(unsigned dx, unsigned dy, unsigned dz, int mx=0, int my=0, int mz=0)
+  {
+    minXYZ = POS_3D <int> (mx, my, mz); dimX = unsigned(dx); dimY = unsigned(dy); dimZ = unsigned(dz);
+    // Iniciaza o vetror com todos os voxeis
+    x = vector <Voxel> (dimX * dimY * dimZ, Voxel());
+  }
+
   // Retorna o elemento da posição espefificada considerando as coordenadas mínimas do canvas
   inline const Voxel & at(int i, int j, int k) const {
       return x.at( abs(
-        (i - minXYZ.x) * dimX +
+        (i - minXYZ.x) * dimX * dimY +
         (j - minXYZ.y) * dimY +
         k - minXYZ.z
       ));
@@ -55,11 +63,14 @@ public:
   // Retorna o elemento da posição espefificada considerando as coordenadas mínimas do canvas
   inline Voxel & at(int i, int j, int k) {
     return x.at( abs(
-      (i - minXYZ.x) * dimX +
+      (i - minXYZ.x) * dimX * dimY +
       (j - minXYZ.y) * dimY +
       k - minXYZ.z
     ));
   }
+
+  // Retorna a quantidade de vértices do canvas
+
 };
 
 #endif //_CANVAS_H_

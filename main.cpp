@@ -1,4 +1,4 @@
-#include "Escultor.h"
+#include "Sculptor.h"
 #include <fstream>
 using namespace std;
 

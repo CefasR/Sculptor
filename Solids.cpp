@@ -17,22 +17,22 @@ void Box::sculpt(Canvas& c) const
 }
 
 
-unsigned int Box::getMaxX() const {
+int Box::getMaxX() const {
 
 }
-unsigned int Box::getMaxY() const {
+int Box::getMaxY() const {
 
 }
-unsigned int Box::getMaxZ() const {
+int Box::getMaxZ() const {
 
 }
-unsigned int Box::getMinX() const {
+int Box::getMinX() const {
 
 }
-unsigned int Box::getMinY() const {
+int Box::getMinY() const {
 
 }
-unsigned int Box::getMinZ() const {
+int Box::getMinZ() const {
 
 }
 
@@ -52,22 +52,22 @@ unsigned int Box::getMinZ() const {
 // }
 //
 //
-// unsigned int Sphere::getMaxX() const {
+// int Sphere::getMaxX() const {
 //
 // }
-// unsigned int Sphere::getMaxY() const {
+// int Sphere::getMaxY() const {
 //
 // }
-// unsigned int Sphere::getMaxZ() const {
+// int Sphere::getMaxZ() const {
 //
 // }
-// unsigned int Sphere::getMinX() const {
+// int Sphere::getMinX() const {
 //
 // }
-// unsigned int Sphere::getMinY() const {
+// int Sphere::getMinY() const {
 //
 // }
-// unsigned int Sphere::getMinZ() const {
+// int Sphere::getMinZ() const {
 //
 // }
 
@@ -93,22 +93,22 @@ void Cylinder::sculpt(Canvas& c) const
 }
 
 
-unsigned int Cylinder::getMaxX() const {
+int Cylinder::getMaxX() const {
 
 }
-unsigned int Cylinder::getMaxY() const {
+int Cylinder::getMaxY() const {
 
 }
-unsigned int Cylinder::getMaxZ() const {
+int Cylinder::getMaxZ() const {
 
 }
-unsigned int Cylinder::getMinX() const {
+int Cylinder::getMinX() const {
 
 }
-unsigned int Cylinder::getMinY() const {
+int Cylinder::getMinY() const {
 
 }
-unsigned int Cylinder::getMinZ() const {
+int Cylinder::getMinZ() const {
 
 }
 
@@ -135,22 +135,22 @@ void Ellipsoid::sculpt(Canvas& c) const{
   }
 }
 
-unsigned int Ellipsoid::getMaxX() const {
+int Ellipsoid::getMaxX() const {
 
 }
-unsigned int Ellipsoid::getMaxY() const {
+int Ellipsoid::getMaxY() const {
 
 }
-unsigned int Ellipsoid::getMaxZ() const {
+int Ellipsoid::getMaxZ() const {
 
 }
 
-unsigned int Ellipsoid::getMinX() const {
+int Ellipsoid::getMinX() const {
 
 }
-unsigned int Ellipsoid::getMinY() const {
+int Ellipsoid::getMinY() const {
 
 }
-unsigned int Ellipsoid::getMinZ() const {
+int Ellipsoid::getMinZ() const {
 
 }
