@@ -25,53 +25,46 @@ void Sculptor::write(const char *Arq)
 
         // Vértices da face X da esquerda
 
-        // 1
         POS_3D <float> P0 = POS_3D <float> (-0.5, -0.5, -0.5) + pos;
-        // 2
         POS_3D <float> P1 = POS_3D <float> (0.5, -0.5, -0.5) + pos;
-        // 3
         POS_3D <float> P2 = POS_3D <float> (0.5, -0.5, 0.5) + pos;
-        // 4
         POS_3D <float> P3 = POS_3D <float> (-0.5, -0.5, 0.5) + pos;
-
-        fout << pos << endl;
-        if (pos == POS_3D <int> (0, 0, 0) ){
-          fout << "P0 " << P0 << endl;
-        }
-
-        if (pos.y == 0 && pos.z == 0) {
-          fout << "P1 " << P1 << endl;
-        }
-
-        fout << "P2 " << P2 << endl;
-        fout << "P3 " << P3 << endl;
-
-        // Vértices da face Y de dentro
-
-        // 5
         POS_3D <float> P4 = POS_3D <float> (-0.5, 0.5, 0.5) + pos;
-        // 6
         POS_3D <float> P5 = POS_3D <float> (-0.5, 0.5, -0.5) + pos;
-
-        if (pos.x == 0 && pos.z == 0) {
-          fout << "P4 " << P4 << endl;
-          fout << "P5 " << P5 << endl;
-        }
-
-        // Vértices da face Z de baixo
-
-        // 7
         POS_3D <float> P6 = POS_3D <float> (0.5, 0.5, -0.5) + pos;
-
-        if (pos.z == 0)
-        fout << "P6 " << P6 << endl;
-
-        // Vértices da face Z de cima
-
-        // 8
         POS_3D <float> P7 = POS_3D <float> (0.5, 0.5, 0.5) + pos;
 
-        fout << "P7 " << P7 << endl;
+        /*
+                    ORDEM DE DESENHO
+
+                       3 . . . . . . . 4
+                    .  .    .       .  .
+                 2 . . . . . . . 7     .
+                 .     .      .  .     .
+                 .  .  .    .    .  .  .
+                 .     . .       .     .
+                 .     0 . . . . . . . 5
+                 .  .       .    .  .
+                 1 . . . . . . . 6
+        */   
+
+
+        if ( pos == POS_3D <int> (0, 0, 0) ) fout << P0 << endl;
+
+        if ( pos.y == 0 ) {
+          if (pos.z == 0) fout << P1 << endl;
+          fout << P2 << endl;
+          if (pos.x == 0) fout << P3 << endl;
+        }
+
+        if (pos.x == 0) {
+          fout << P4 << endl;
+          if (pos.z == 0) fout << P5 << endl;
+        }
+
+        if (pos.z == 0) fout << P6 << endl;
+
+        fout << P7 << endl;
 
       }
     }
