@@ -36,6 +36,10 @@ public:
                      int R, int height);
     void cleanVoxels(void);
     void write(const char *Arq);
+
+    // Retorna a extremidade mínima
+    POS_3D <int> getMinXYZ() const;
+
 };
 
 #endif //_SCULPTOR_H_

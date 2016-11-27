@@ -17,23 +17,23 @@ void Box::sculpt(Canvas& c) const
 }
 
 
-int Box::getMaxX() const {
-
+inline int Box::getMaxX() const {
+  return (pos.x + width / 2);
 }
-int Box::getMaxY() const {
-
+inline int Box::getMaxY() const {
+  return (pos.y + length / 2);
 }
-int Box::getMaxZ() const {
-
+inline int Box::getMaxZ() const {
+  return (pos.z + height / 2);
 }
-int Box::getMinX() const {
-
+inline int Box::getMinX() const {
+  return (pos.x - width / 2);
 }
-int Box::getMinY() const {
-
+inline int Box::getMinY() const {
+  return (pos.y - length / 2);
 }
-int Box::getMinZ() const {
-
+inline int Box::getMinZ() const {
+  return (pos.z - height / 2);
 }
 
 
@@ -93,23 +93,23 @@ void Cylinder::sculpt(Canvas& c) const
 }
 
 
-int Cylinder::getMaxX() const {
-
+inline int Cylinder::getMaxX() const {
+  return (pos.x + radius);
 }
-int Cylinder::getMaxY() const {
-
+inline int Cylinder::getMaxY() const {
+  return (pos.y + radius);
 }
-int Cylinder::getMaxZ() const {
-
+inline int Cylinder::getMaxZ() const {
+  return (pos.z + height / 2);
 }
-int Cylinder::getMinX() const {
-
+inline int Cylinder::getMinX() const {
+  return (pos.x - radius);
 }
-int Cylinder::getMinY() const {
-
+inline int Cylinder::getMinY() const {
+  return (pos.y - radius);
 }
-int Cylinder::getMinZ() const {
-
+inline int Cylinder::getMinZ() const {
+  return (pos.z - height / 2);
 }
 
 void Ellipsoid::sculpt(Canvas& c) const{
@@ -135,22 +135,21 @@ void Ellipsoid::sculpt(Canvas& c) const{
   }
 }
 
-int Ellipsoid::getMaxX() const {
-
+inline int Ellipsoid::getMaxX() const {
+  return (pos.x + x_radius);
 }
-int Ellipsoid::getMaxY() const {
-
+inline int Ellipsoid::getMaxY() const {
+  return (pos.y + y_radius);
 }
-int Ellipsoid::getMaxZ() const {
-
+inline int Ellipsoid::getMaxZ() const {
+  return (pos.z + z_radius);
 }
-
-int Ellipsoid::getMinX() const {
-
+inline int Ellipsoid::getMinX() const {
+  return (pos.x - x_radius);
 }
-int Ellipsoid::getMinY() const {
-
+inline int Ellipsoid::getMinY() const {
+  return (pos.y - y_radius);
 }
-int Ellipsoid::getMinZ() const {
-
+inline int Ellipsoid::getMinZ() const {
+  return (pos.z + z_radius);
 }

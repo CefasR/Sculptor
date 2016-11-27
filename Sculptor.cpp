@@ -24,15 +24,20 @@ void Sculptor::write(const char *Arq)
         cout << pos << endl;
 
         // Vértices da face X da esquerda
-
         POS_3D <float> P0 = POS_3D <float> (-0.5, -0.5, -0.5) + pos;
-        POS_3D <float> P1 = POS_3D <float> (0.5, -0.5, -0.5) + pos;
-        POS_3D <float> P2 = POS_3D <float> (0.5, -0.5, 0.5) + pos;
-        POS_3D <float> P3 = POS_3D <float> (-0.5, -0.5, 0.5) + pos;
-        POS_3D <float> P4 = POS_3D <float> (-0.5, 0.5, 0.5) + pos;
-        POS_3D <float> P5 = POS_3D <float> (-0.5, 0.5, -0.5) + pos;
-        POS_3D <float> P6 = POS_3D <float> (0.5, 0.5, -0.5) + pos;
-        POS_3D <float> P7 = POS_3D <float> (0.5, 0.5, 0.5) + pos;
+        POS_3D <float> P1 = POS_3D <float> ( 0.5, -0.5, -0.5) + pos;
+        POS_3D <float> P2 = POS_3D <float> ( 0.5, -0.5,  0.5) + pos;
+        POS_3D <float> P3 = POS_3D <float> (-0.5, -0.5,  0.5) + pos;
+
+        // Vértices da face Y de dentro
+        POS_3D <float> P4 = POS_3D <float> (-0.5,  0.5,  0.5) + pos;
+        POS_3D <float> P5 = POS_3D <float> (-0.5,  0.5, -0.5) + pos;
+
+        // Vétices da K de baixo
+        POS_3D <float> P6 = POS_3D <float> ( 0.5,  0.5, -0.5) + pos;
+
+        // Vétices da face X da direita
+        POS_3D <float> P7 = POS_3D <float> ( 0.5,  0.5,  0.5) + pos;
 
         /*
                     ORDEM DE DESENHO
@@ -46,7 +51,7 @@ void Sculptor::write(const char *Arq)
                  .     0 . . . . . . . 5
                  .  .       .    .  .
                  1 . . . . . . . 6
-        */   
+        */
 
 
         if ( pos == POS_3D <int> (0, 0, 0) ) fout << P0 << endl;
