@@ -3,9 +3,12 @@ using namespace std;
 
 void Box::sculpt(Canvas& c) const
 {
-  for (int i = (pos.x - width / 2); i < (pos.x + width / 2); i++) {
-    for (int j = (pos.y - length / 2); j < (pos.y + length / 2); j++) {
-      for (int k = (pos.z - height / 2); k < (pos.z + height / 2); k++) {
+
+  cout << "Sculpting Box..." << endl;
+  for (int i = getMinX(); i < getMaxX(); i++) {
+    for (int j = getMinY(); j < getMaxY(); j++) {
+      for (int k = getMinZ(); k < getMaxZ(); k++) {
+        cout << c.getNormalPos(i, j, k) << endl;
         // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
         /*Surte o mesmo efeito que o código comentado acima
           funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
@@ -18,22 +21,22 @@ void Box::sculpt(Canvas& c) const
 
 
 inline int Box::getMaxX() const {
-  return (pos.x + width / 2);
+  return (pos.x + width / 2.0);
 }
 inline int Box::getMaxY() const {
-  return (pos.y + length / 2);
+  return (pos.y + length / 2.0);
 }
 inline int Box::getMaxZ() const {
-  return (pos.z + height / 2);
+  return (pos.z + height / 2.0);
 }
 inline int Box::getMinX() const {
-  return (pos.x - width / 2);
+  return (pos.x - width / 2.0);
 }
 inline int Box::getMinY() const {
-  return (pos.y - length / 2);
+  return (pos.y - length / 2.0);
 }
 inline int Box::getMinZ() const {
-  return (pos.z - height / 2);
+  return (pos.z - height / 2.0);
 }
 
 
@@ -75,9 +78,9 @@ void Cylinder::sculpt(Canvas& c) const
 {
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
-    for (int i = int(pos.x - radius); i < int(pos.x + radius); i++) {
-        for (int j = int(pos.y - radius); j < int(pos.y + radius); j++) {
-            for (int k = int(pos.z - height); k < int(pos.z + height); k++) {
+    for (int i = getMinX(); i < getMaxX(); i++) {
+      for (int j = getMinY(); j < getMaxY(); j++) {
+        for (int k = getMinZ(); k < getMaxZ(); k++) {
 
                 // Verifica se o ponto faz parte do cilindro
                 if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
@@ -100,7 +103,7 @@ inline int Cylinder::getMaxY() const {
   return (pos.y + radius);
 }
 inline int Cylinder::getMaxZ() const {
-  return (pos.z + height / 2);
+  return (pos.z + height / 2.0);
 }
 inline int Cylinder::getMinX() const {
   return (pos.x - radius);
@@ -109,15 +112,15 @@ inline int Cylinder::getMinY() const {
   return (pos.y - radius);
 }
 inline int Cylinder::getMinZ() const {
-  return (pos.z - height / 2);
+  return (pos.z - height / 2.0);
 }
 
 void Ellipsoid::sculpt(Canvas& c) const{
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
-  for (int i = int(pos.x - x_radius); i < int(pos.x + x_radius); i++) {
-    for (int j = int(pos.y - y_radius); j < int(pos.y + y_radius); j++) {
-      for (int k = int(pos.z - z_radius); k < int(pos.z + z_radius); k++) {
+  for (int i = getMinX(); i < getMaxX(); i++) {
+    for (int j = getMinY(); j < getMaxY(); j++) {
+      for (int k = getMinZ(); k < getMaxZ(); k++) {
         // Verifica se o ponto faz parte do elipsoide
         if (
           pow(i - pos.x, 2) / pow(x_radius, 2) +

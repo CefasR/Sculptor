@@ -6,10 +6,11 @@
 #include "Canvas.h"
 using namespace std;
 
+typedef list <pSolid>::iterator pSolidIterator;
 
 class Sculptor : protected Canvas {
 private:
-    list<pSolid> l;
+    list <pSolid> l;
     float R, G, B, alpha;
 public:
 
@@ -38,7 +39,13 @@ public:
     void write(const char *Arq);
 
     // Retorna a extremidade mínima
-    POS_3D <int> getMinXYZ() const;
+    POS_3D <int> getMinXYZ();
+
+    // Retorna a extremidade máxima
+    POS_3D <int> getMaxXYZ();
+
+    // Desenha as formas no canvas
+    void draw();
 
 };
 

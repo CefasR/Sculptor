@@ -5,7 +5,10 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
-  sculptor.putBox(0, 3, 0, 3, 0, 3);
+  sculptor.putBox(0, 1, 0, 2, 0, 1);
+
+  cout << "Mínimo: " << sculptor.getMinXYZ() << endl;
+  cout << "Máximo: " << sculptor.getMaxXYZ() << endl;
 
   sculptor.write("as");
 /*
