@@ -11,53 +11,53 @@ enum VoxelVextex {
   V0, V1, V2, V3, V4, V5, V6, V7
 };
 
-VoxelVextex & operator++ (VoxelVextex& vertex){
-  switch (vertex) {
-    case V0: return vertex = V1;
-    case V1: return vertex = V2;
-    case V2: return vertex = V3;
-    case V3: return vertex = V4;
-    case V4: return vertex = V5;
-    case V6: return vertex = V7;
-    default: return vertex = V0;
-  }
-}
-
-VoxelVextex & operator-- (VoxelVextex& vertex) {
-  switch (vertex) {
-    case V0: return vertex = V7;
-    case V1: return vertex = V0;
-    case V2: return vertex = V2;
-    case V3: return vertex = V3;
-    case V4: return vertex = V4;
-    case V6: return vertex = V5;
-    default: return vertex = V6;
-  }
-}
-
-VoxelVextex operator++ (VoxelVextex & vertex, int) {
-  VoxelVextex tmp(vertex);
-  ++tmp;
-  return tmp;
-}
-
-VoxelVextex operator-- (VoxelVextex & vertex, int) {
-  VoxelVextex tmp(vertex);
-  --tmp;
-  return tmp;
-}
-
-VoxelVextex operator+ (VoxelVextex vertex, int n) {
-  for (int i = 0; i < abs(n); i++ ) n > 0 ? ++vertex : --vertex;
-
-  return vertex;
-}
-
-VoxelVextex operator- (VoxelVextex vertex, int n) {
-  for (int i = 0; i < abs(n); i++ ) n < 0 ? ++vertex : --vertex;
-
-  return vertex;
-}
+// VoxelVextex & operator++ (VoxelVextex& vertex){
+//   switch (vertex) {
+//     case V0: return vertex = V1;
+//     case V1: return vertex = V2;
+//     case V2: return vertex = V3;
+//     case V3: return vertex = V4;
+//     case V4: return vertex = V5;
+//     case V6: return vertex = V7;
+//     default: return vertex = V0;
+//   }
+// }
+//
+// VoxelVextex & operator-- (VoxelVextex& vertex) {
+//   switch (vertex) {
+//     case V0: return vertex = V7;
+//     case V1: return vertex = V0;
+//     case V2: return vertex = V2;
+//     case V3: return vertex = V3;
+//     case V4: return vertex = V4;
+//     case V6: return vertex = V5;
+//     default: return vertex = V6;
+//   }
+// }
+//
+// VoxelVextex operator++ (VoxelVextex & vertex, int) {
+//   VoxelVextex tmp(vertex);
+//   ++tmp;
+//   return tmp;
+// }
+//
+// VoxelVextex operator-- (VoxelVextex & vertex, int) {
+//   VoxelVextex tmp(vertex);
+//   --tmp;
+//   return tmp;
+// }
+//
+// VoxelVextex operator+ (VoxelVextex vertex, int n) {
+//   for (int i = 0; i < abs(n); i++ ) n > 0 ? ++vertex : --vertex;
+//
+//   return vertex;
+// }
+//
+// VoxelVextex operator- (VoxelVextex vertex, int n) {
+//   for (int i = 0; i < abs(n); i++ ) n < 0 ? ++vertex : --vertex;
+//
+//   return vertex;
+// }
 
 // Estrutura de dados que contém as informações do voxel
 struct Voxel {
@@ -244,46 +244,54 @@ public:
     }
   }
 
-  unsigned int getVoxelVertexIndexAt(POS_3D <unsigned int> pos, VoxelVextex vertex) {
+  // unsigned int getVoxelVertexIndexAt(POS_3D <unsigned int> pos, VoxelVextex vertex) {
+  //
+  //   // Posição do voxel que contém o vértice V0 do voxel corrente
+  //   POS_3D <int> lim(
+  //     pos.x > 0 ? pos.x - 1: pos.x,
+  //     pos.y > 0 ? pos.y - 1: pos.y,
+  //     pos.z > 0 ? pos.z - 1: pos.z
+  //   );
+  //
+  //   // Contador de vértices até o voxel que contém o vértice V0 do voxel corrente
+  //   unsigned cnt = ( (lim.x > 0 ? lim.x : --lim.x) + 1) * (dimY + 1) * (dimZ + 1) +
+  //                  ( lim.x > 0 ? 1 : 2 ) * ( (lim.y > 0 ? lim.y : --lim.y) + 1) * (dimZ + 1) +
+  //                  ( lim.x > 0 ? 1 : 2 ) * ( lim.y > 0 ? 1 : 2 ) * ( (lim.z > 0 ? lim.z : --lim.z) + 1);
+  //
+  //
+  //   switch (vertex) {
+  //     case V0: {
+  //       // // Se ele for a origem retorna 0
+  //       // if (pos == origin) return 0;
+  //       // // Se ele estiver no meio
+  //       // if (pos.x > 0 && pos.y > 0 && pos.z > 0) {
+  //       //   return pos.x * (dimY + 1) * (dimK + 1) + pos.j * (dimK + 1) + pos.k * 2;
+  //       // }
+  //       // // Se ele estiver na extremidade da esquerda
+  //       // if (pos.y == 0) return tmp;
+  //       // // Se ele estiver na extremidade de dentro
+  //       // if (pos.x == 0) return tmp;
+  //
+  //       // Se o voxel que contém o vértice P0 está ao fundo do vértice corrente
+  //
+  //
+  //       break;
+  //     }
+  //     case V1: return V2;
+  //     case V2: return V3;
+  //     case V3: return V4;
+  //     case V4: return V5;
+  //     case V6: return V7;
+  //     default: return V0;
+  //   }
+  // }
 
-    // Posição do voxel que contém o vértice V0 do voxel corrente
-    POS_3D <int> lim(
-      pos.x > 0 ? pos.x - 1: pos.x,
-      pos.y > 0 ? pos.y - 1: pos.y,
-      pos.z > 0 ? pos.z - 1: pos.z
-    );
+  inline unsigned int getVoxelVertexIndexAt(unsigned i, unsigned j, unsigned k) {
+    return i * (dimX + 1) * (dimY + 1) + j * (dimZ + 1) + k;
+  }
 
-    // Contador de vértices até o voxel que contém o vértice V0 do voxel corrente
-    unsigned cnt = ( (lim.x > 0 ? lim.x : --lim.x) + 1) * (dimY + 1) * (dimZ + 1) +
-                   ( lim.x > 0 ? 1 : 2 ) * ( (lim.y > 0 ? lim.y : --lim.y) + 1) * (dimZ + 1) +
-                   ( lim.x > 0 ? 1 : 2 ) * ( lim.y > 0 ? 1 : 2 ) * ( (lim.z > 0 ? lim.z : --lim.z) + 1);
-
-    
-    switch (vertex) {
-      case V0: {
-        // // Se ele for a origem retorna 0
-        // if (pos == origin) return 0;
-        // // Se ele estiver no meio
-        // if (pos.x > 0 && pos.y > 0 && pos.z > 0) {
-        //   return pos.x * (dimY + 1) * (dimK + 1) + pos.j * (dimK + 1) + pos.k * 2;
-        // }
-        // // Se ele estiver na extremidade da esquerda
-        // if (pos.y == 0) return tmp;
-        // // Se ele estiver na extremidade de dentro
-        // if (pos.x == 0) return tmp;
-
-        // Se o voxel que contém o vértice P0 está ao fundo do vértice corrente
-
-
-        break;
-      }
-      case V1: return V2;
-      case V2: return V3;
-      case V3: return V4;
-      case V4: return V5;
-      case V6: return V7;
-      default: return V0;
-    }
+  inline unsigned int getVoxelVertexIndexAt(POS_3D <unsigned int> pos) {
+    getVoxelVertexIndexAt(pos.x, pos.y, pos.z);
   }
 };
 

@@ -17,7 +17,7 @@ public:
     float r=0.0, float g=0.0, float b=0.0, float a=1.0,
     // Ativo (sim ou não)
     bool on=true
-  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) {}
+  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) { }
 
   // Método virtual para sculpt o Solid
   virtual void sculpt(Canvas& c) const = 0;

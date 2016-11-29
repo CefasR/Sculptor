@@ -5,12 +5,15 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
-  sculptor.putBox(-1, 0, 0, 2, 0, 1);
+  sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
+
+  sculptor.putBox(1, 5, 1, 4, 1, 3);
+  //sculptor.putCylinder(0, 0, 2, 10, 4);
 
   cout << "Mínimo: " << sculptor.getMinXYZ() << endl;
   cout << "Máximo: " << sculptor.getMaxXYZ() << endl;
 
-  sculptor.write("as");
+  sculptor.write("as.off");
 /*
   Voxel ***matriz = new Voxel**[30];
 
