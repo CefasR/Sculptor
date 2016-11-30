@@ -11,15 +11,13 @@ protected:
 public:
 
   inline Solid (
-    float x=0.0,
-    float y=0.0,
-    float z=0.0,
-    float r=0.0,
-    float g=0.0,
-    float b=0.0,
-    float a=1.0,
+    // Posição XYZ
+    float x=0.0, float y=0.0, float z=0.0,
+    // Cor + Alpha
+    float r=0.0, float g=0.0, float b=0.0, float a=1.0,
+    // Ativo (sim ou não)
     bool on=true
-  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) {}
+  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) { }
 
   // Método virtual para sculpt o Solid
   virtual void sculpt(Canvas& c) const = 0;
@@ -29,13 +27,13 @@ public:
   // void trasladar(int x, int y, int z);
   // void rotacionar(float a_x_y, float a_x_z, float a_y_z);
 
-  virtual unsigned int getMaxX() const = 0;
-  virtual unsigned int getMaxY() const = 0;
-  virtual unsigned int getMaxZ() const = 0;
+  virtual int getMaxX() const = 0;
+  virtual int getMaxY() const = 0;
+  virtual int getMaxZ() const = 0;
 
-  virtual unsigned int getMinX() const = 0;
-  virtual unsigned int getMinY() const = 0;
-  virtual unsigned int getMinZ() const = 0;
+  virtual int getMinX() const = 0;
+  virtual int getMinY() const = 0;
+  virtual int getMinZ() const = 0;
 
   inline void setColor(float r, float g, float b) {
     R = r; G = g; B = b;
@@ -48,6 +46,8 @@ public:
   inline void translade(float x, float y, float z) {
     pos.x += x; pos.y += y; pos.z += z;
   }
+
+  inline virtual ~Solid() {}
 
 };
 
@@ -64,18 +64,18 @@ public:
     bool on=true,
     // Largura (eixo x) | Comprimento (eixo y) | Altura (eixo z)
     unsigned int w=1, unsigned int l=1, unsigned int h=1
-  ) : Solid(x, y, z, r, g, b, a, on), width(w), length(l), height(w) {}
+  ) : Solid(x, y, z, r, g, b, a, on), width(w), length(l), height(h) { }
 
   // sculpt a Solid
   void sculpt(Canvas& c) const;
 
-  unsigned int getMaxX() const;
-  unsigned int getMaxY() const;
-  unsigned int getMaxZ() const;
+  int getMaxX() const;
+  int getMaxY() const;
+  int getMaxZ() const;
 
-  unsigned int getMinX() const;
-  unsigned int getMinY() const;
-  unsigned int getMinZ() const;
+  int getMinX() const;
+  int getMinY() const;
+  int getMinZ() const;
 };
 
 
@@ -124,13 +124,13 @@ public:
 
   void sculpt(Canvas& c) const;
 
-  unsigned int getMaxX() const;
-  unsigned int getMaxY() const;
-  unsigned int getMaxZ() const;
+  int getMaxX() const;
+  int getMaxY() const;
+  int getMaxZ() const;
 
-  unsigned int getMinX() const;
-  unsigned int getMinY() const;
-  unsigned int getMinZ() const;
+  int getMinX() const;
+  int getMinY() const;
+  int getMinZ() const;
 };
 
 class Ellipsoid : public Solid{
@@ -149,13 +149,13 @@ public:
 
       void sculpt(Canvas& c) const;
 
-      unsigned int getMaxX() const;
-      unsigned int getMaxY() const;
-      unsigned int getMaxZ() const;
+      int getMaxX() const;
+      int getMaxY() const;
+      int getMaxZ() const;
 
-      unsigned int getMinX() const;
-      unsigned int getMinY() const;
-      unsigned int getMinZ() const;
+      int getMinX() const;
+      int getMinY() const;
+      int getMinZ() const;
 };
 
 typedef Solid *pSolid;

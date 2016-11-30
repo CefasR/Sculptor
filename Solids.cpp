@@ -3,37 +3,41 @@ using namespace std;
 
 void Box::sculpt(Canvas& c) const
 {
-  for (int i = (pos.x - width / 2); i < (pos.x + width / 2); i++) {
-    for (int j = (pos.y - length / 2); j < (pos.y + length / 2); j++) {
-      for (int k = (pos.z - height / 2); k < (pos.z + height / 2); k++) {
+
+  cout << "Sculpting Box..." << endl;
+  for (int i = getMinX(); i < getMaxX(); i++) {
+    for (int j = getMinY(); j < getMaxY(); j++) {
+      for (int k = getMinZ(); k < getMaxZ(); k++) {
         // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
         /*Surte o mesmo efeito que o código comentado acima
           funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
           que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-        c.at(i, j, k) = *this;
+
+        c.at(c.getNormalPos(i, j, k)) = (*this);
+
       }
     }
   }
 }
 
 
-unsigned int Box::getMaxX() const {
-
+inline int Box::getMaxX() const {
+  return (pos.x + width / 2.0);
 }
-unsigned int Box::getMaxY() const {
-
+inline int Box::getMaxY() const {
+  return (pos.y + length / 2.0);
 }
-unsigned int Box::getMaxZ() const {
-
+inline int Box::getMaxZ() const {
+  return (pos.z + height / 2.0);
 }
-unsigned int Box::getMinX() const {
-
+inline int Box::getMinX() const {
+  return (pos.x - width / 2.0);
 }
-unsigned int Box::getMinY() const {
-
+inline int Box::getMinY() const {
+  return (pos.y - length / 2.0);
 }
-unsigned int Box::getMinZ() const {
-
+inline int Box::getMinZ() const {
+  return (pos.z - height / 2.0);
 }
 
 
@@ -52,22 +56,22 @@ unsigned int Box::getMinZ() const {
 // }
 //
 //
-// unsigned int Sphere::getMaxX() const {
+// int Sphere::getMaxX() const {
 //
 // }
-// unsigned int Sphere::getMaxY() const {
+// int Sphere::getMaxY() const {
 //
 // }
-// unsigned int Sphere::getMaxZ() const {
+// int Sphere::getMaxZ() const {
 //
 // }
-// unsigned int Sphere::getMinX() const {
+// int Sphere::getMinX() const {
 //
 // }
-// unsigned int Sphere::getMinY() const {
+// int Sphere::getMinY() const {
 //
 // }
-// unsigned int Sphere::getMinZ() const {
+// int Sphere::getMinZ() const {
 //
 // }
 
@@ -75,49 +79,51 @@ void Cylinder::sculpt(Canvas& c) const
 {
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
-    for (int i = int(pos.x - radius); i < int(pos.x + radius); i++) {
-        for (int j = int(pos.y - radius); j < int(pos.y + radius); j++) {
-            for (int k = int(pos.z - height); k < int(pos.z + height); k++) {
 
-                // Verifica se o ponto faz parte do cilindro
-                if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
-                  // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
-                  /*Surte o mesmo efeito que o código comentado acima
-                    funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
-                    que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-                  c.at(i, j, k) = *this;;
-                }
+  cout << "Sculpting a Cylinder..." << endl;
+
+    for (int i = getMinX(); i < getMaxX(); i++) {
+      for (int j = getMinY(); j < getMaxY(); j++) {
+        for (int k = getMinZ(); k < getMaxZ(); k++) {
+            // Verifica se o ponto faz parte do cilindro
+            if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
+              // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
+              /*Surte o mesmo efeito que o código comentado acima
+                funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
+                que converte *this (da classe Solid) em um elemento do tipo voxel)*/
+              c.at(c.getNormalPos(i, j, k)) = (*this);
             }
         }
+      }
     }
 }
 
 
-unsigned int Cylinder::getMaxX() const {
-
+inline int Cylinder::getMaxX() const {
+  return (pos.x + radius);
 }
-unsigned int Cylinder::getMaxY() const {
-
+inline int Cylinder::getMaxY() const {
+  return (pos.y + radius);
 }
-unsigned int Cylinder::getMaxZ() const {
-
+inline int Cylinder::getMaxZ() const {
+  return (float(pos.z) + (height / 2.0));
 }
-unsigned int Cylinder::getMinX() const {
-
+inline int Cylinder::getMinX() const {
+  return (pos.x - radius);
 }
-unsigned int Cylinder::getMinY() const {
-
+inline int Cylinder::getMinY() const {
+  return (pos.y - radius);
 }
-unsigned int Cylinder::getMinZ() const {
-
+inline int Cylinder::getMinZ() const {
+  return (float(pos.z) - (height / 2.0));
 }
 
 void Ellipsoid::sculpt(Canvas& c) const{
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
-  for (int i = int(pos.x - x_radius); i < int(pos.x + x_radius); i++) {
-    for (int j = int(pos.y - y_radius); j < int(pos.y + y_radius); j++) {
-      for (int k = int(pos.z - z_radius); k < int(pos.z + z_radius); k++) {
+  for (int i = getMinX(); i < getMaxX(); i++) {
+    for (int j = getMinY(); j < getMaxY(); j++) {
+      for (int k = getMinZ(); k < getMaxZ(); k++) {
         // Verifica se o ponto faz parte do elipsoide
         if (
           pow(i - pos.x, 2) / pow(x_radius, 2) +
@@ -128,29 +134,28 @@ void Ellipsoid::sculpt(Canvas& c) const{
           /*Surte o mesmo efeito que o código comentado acima
             funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
             que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-          c.at(i, j, k) = *this;
+          c.at(c.getNormalPos(i, j, k)) = (*this);
         }
       }
     }
   }
 }
 
-unsigned int Ellipsoid::getMaxX() const {
-
+inline int Ellipsoid::getMaxX() const {
+  return (pos.x + x_radius);
 }
-unsigned int Ellipsoid::getMaxY() const {
-
+inline int Ellipsoid::getMaxY() const {
+  return (pos.y + y_radius);
 }
-unsigned int Ellipsoid::getMaxZ() const {
-
+inline int Ellipsoid::getMaxZ() const {
+  return (pos.z + z_radius);
 }
-
-unsigned int Ellipsoid::getMinX() const {
-
+inline int Ellipsoid::getMinX() const {
+  return (pos.x - x_radius);
 }
-unsigned int Ellipsoid::getMinY() const {
-
+inline int Ellipsoid::getMinY() const {
+  return (pos.y - y_radius);
 }
-unsigned int Ellipsoid::getMinZ() const {
-
+inline int Ellipsoid::getMinZ() const {
+  return (pos.z - z_radius);
 }
