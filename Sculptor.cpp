@@ -10,7 +10,7 @@ void Sculptor::write(const char *Arq)
   draw();
 
   fout << "OFF" << endl;
-  fout << getNVertices() << " " << getNEdges() << " " << 0 << endl;
+  fout << getNVertices() << " " << getNFaces() << " " << 0 << endl;
 
   POS_3D <int> pos;
 
@@ -189,6 +189,13 @@ void Sculptor::cutVoxel(int X, int Y, int Z) {
   l.push_back(new Box(X, Y, Z, 0.0, 0.0, 0.0, 0.0, false));
 }
 
+void Sculptor::putEllipsoid(int Xc, int Yc, int Zc, int Rx, int Ry, int Rz) {
+  l.push_back(new Ellipsoid(Xc, Yc, Zc, R, G, B, alpha, true, abs(Rx), abs(Ry), abs(Rz) ));
+}
+void Sculptor::cutEllipsoid(int Xc, int Yc, int Zc, int Rx, int Ry, int Rz) {
+    l.push_back(new Ellipsoid(Xc, Yc, Zc, R, G, B, alpha, false, abs(Rx), abs(Ry), abs(Rz) ));
+}
+
 void Sculptor::putSphere(int Xc, int Yc, int Zc, int r) {
   l.push_back(new Ellipsoid(Xc, Yc, Zc, R, G, B, alpha, true, abs(r), abs(r), abs(r) ));
 }
@@ -230,13 +237,11 @@ POS_3D <int> Sculptor::getMinXYZ() {
     // Instancia o mínimo corrente
     POS_3D <int> current( (*i)->getMinX(), (*i)->getMinY(), (*i)->getMinZ() );
 
-    cout << (*i)->getMinY() << endl;
-
     // Verifica se é o primeiro ou se o corrente é menor que o mínimo atual
     if (i == l.begin()) minXYZ = current;
-    else if (minXYZ.x > current.x ) minXYZ.x = current.x;
-    else if (minXYZ.y > current.y ) minXYZ.y = current.y;
-    else if (minXYZ.z > current.z ) minXYZ.z = current.z;
+    if (minXYZ.x > current.x ) minXYZ.x = current.x;
+    if (minXYZ.y > current.y ) minXYZ.y = current.y;
+    if (minXYZ.z > current.z ) minXYZ.z = current.z;
   }
 
   return minXYZ;
@@ -249,13 +254,11 @@ POS_3D <int> Sculptor::getMaxXYZ() {
     // Instancia o mínimo corrente
     POS_3D <int> current( (*i)->getMaxX(), (*i)->getMaxY(), (*i)->getMaxZ() );
 
-    cout << (*i)->getMaxX() << endl;
-
     // Verifica se é o primeiro ou se o corrente é menor que o mínimo atual
     if (i == l.begin()) maxXYZ = current;
-    else if (maxXYZ.x < current.x ) maxXYZ.x = current.x;
-    else if (maxXYZ.y < current.y ) maxXYZ.y = current.y;
-    else if (maxXYZ.z < current.z ) maxXYZ.z = current.z;
+    if (maxXYZ.x < current.x ) maxXYZ.x = current.x;
+    if (maxXYZ.y < current.y ) maxXYZ.y = current.y;
+    if (maxXYZ.z < current.z ) maxXYZ.z = current.z;
   }
 
   return maxXYZ;
@@ -267,8 +270,6 @@ void Sculptor::draw() {
 
   initialize(size.x, size.y, size.z, min.x, min.y, min.z);
 
-  cout << "oa " << ( POS_3D <int> (dimX, dimY, dimZ)) << endl;
-
   for (pSolidIterator i = l.begin(); i != l.end(); ++i){
     (*i)->sculpt(*this);
   }
@@ -276,9 +277,9 @@ void Sculptor::draw() {
   removeIrrelevantVoxels();
 }
 
-void Sculptor::putCylinder(int Xc, int Yc, float Zc, int r, int height){
-  l.push_back(new Cylinder(Xc, Yc, Zc, R, G, B, alpha, true, abs(r), abs(height) ));
+void Sculptor::putCylinder(int Xc, int Yc, int Z0, int Z1, int r){
+  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, true, abs(r), abs(Z1 - Z0) ));
 }
-void Sculptor::cutCylinder(int Xc, int Yc, float Zc, int r, int height){
-  l.push_back(new Cylinder(Xc, Yc, Zc, R, G, B, alpha, false, abs(r), abs(height) ));
+void Sculptor::cutCylinder(int Xc, int Yc, int Z0, int Z1, int r){
+  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, false, abs(r), abs(Z1 - Z0) ));
 }

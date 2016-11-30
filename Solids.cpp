@@ -22,7 +22,6 @@ void Box::sculpt(Canvas& c) const
 
 
 inline int Box::getMaxX() const {
-  cout << "p "<< (pos.y) << endl;
   return (pos.x + width / 2.0);
 }
 inline int Box::getMaxY() const {
@@ -83,28 +82,19 @@ void Cylinder::sculpt(Canvas& c) const
 
   cout << "Sculpting a Cylinder..." << endl;
 
-  cout << getMinX() << " " << getMinY() << " " << getMinZ() << endl;
-  cout << getMaxX() << " " << getMaxY() << " " << getMaxZ() << endl;
-
     for (int i = getMinX(); i < getMaxX(); i++) {
       for (int j = getMinY(); j < getMaxY(); j++) {
         for (int k = getMinZ(); k < getMaxZ(); k++) {
-
-          cout << "paas " << i << endl;
-
-            cout << i << " " << j << " " << k << endl;
-
-                // Verifica se o ponto faz parte do cilindro
-                if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
-                  // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
-                  /*Surte o mesmo efeito que o código comentado acima
-                    funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
-                    que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-                    cout << "entrou" << endl;
-                  c.at(c.getNormalPos(i, j, k)) = (*this);
-                }
+            // Verifica se o ponto faz parte do cilindro
+            if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
+              // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
+              /*Surte o mesmo efeito que o código comentado acima
+                funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
+                que converte *this (da classe Solid) em um elemento do tipo voxel)*/
+              c.at(c.getNormalPos(i, j, k)) = (*this);
             }
         }
+      }
     }
 }
 

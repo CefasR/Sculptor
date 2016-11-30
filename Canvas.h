@@ -173,7 +173,7 @@ public:
   inline unsigned getNVertices() const { return (dimX + 1) * (dimY + 1) * (dimZ + 1); }
 
   // Retorna a quantidade de faces do canvas
-  inline unsigned getNEdges() {
+  inline unsigned getNFaces() {
     unsigned qtd(0);
     for (int i = 0; i < dimX; ++i) {
       for (int j = 0; j < dimY; ++j) {
@@ -287,7 +287,7 @@ public:
   // }
 
   inline unsigned int getVoxelVertexIndexAt(unsigned i, unsigned j, unsigned k) {
-    return i * (dimX + 1) * (dimY + 1) + j * (dimZ + 1) + k;
+    return i * (dimZ + 1) * (dimY + 1) + j * (dimZ + 1) + k;
   }
 
   inline unsigned int getVoxelVertexIndexAt(POS_3D <unsigned int> pos) {

@@ -31,10 +31,10 @@ public:
                       int Rx, int Ry, int Rz);
     void cutEllipsoid(int Xc, int Yc, int Zc,
                       int Rx, int Ry, int Rz);
-    void putCylinder(int Xc, int Yc, float Zc,
-                     int r, int height);
-    void cutCylinder(int Xc, int Yc, float Zc,
-                     int r, int height);
+    void putCylinder(int Xc, int Yc, int Z0, int Z1,
+                     int r);
+    void cutCylinder(int Xc, int Yc, int Z0, int Z1,
+                     int r);
     void cleanVoxels(void);
     void write(const char *Arq);
 

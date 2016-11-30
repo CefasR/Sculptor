@@ -5,10 +5,29 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
+  sculptor.setColor(0.0, 0.0, 0.0, 1.0);
+
+  sculptor.putCylinder(0, 0, -19, -24, 21);
+
+  sculptor.putEllipsoid(0, 20, -22, 8, 2, 8);
+
+  sculptor.setColor(1.0, 1.0, 1.0, 1.0);
+
+  sculptor.putEllipsoid(0, 16, -22, 8, 6, 8);
+
+  sculptor.setColor(121/255.0, 85/255.0, 72/255.0, 1.0);
+
+  sculptor.putEllipsoid(0, 20, -22, 4, 2, 4);
+
+  sculptor.setColor(21/255.0, 31/255.0, 200/255.0, 1.0);
+
+  sculptor.putEllipsoid(0, 0, -40, 20, 20, 10);
+  sculptor.putCylinder(0, 0, -40, -36, 20);
+
   sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
 
-  sculptor.putBox(1, 5, 1, 4, 1, 3);
-  //sculptor.putCylinder(0, 0, 2, 10, 4);
+  sculptor.putSphere(0, 0, -20, 20);
+  sculptor.putCylinder(0, 0, -20, -36, 20);
 
   cout << "Mínimo: " << sculptor.getMinXYZ() << endl;
   cout << "Máximo: " << sculptor.getMaxXYZ() << endl;
