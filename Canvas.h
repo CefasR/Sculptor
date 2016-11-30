@@ -230,15 +230,17 @@ public:
           if (
             // Se ele não pertencer a nenhuma das extremidades e se esle está ativo
             i != 0 && j != 0 && k != 0 && at(i, j, k).is_on &&
-            i < int(minXYZ.x + dimX) && j < int(minXYZ.y + dimY) && k < int(minXYZ.z + dimZ) &&
+            i < (dimX - 1) && j < (dimY - 1) && k < (dimZ - 1) &&
             // Se ele estiver rodeado de mais 6 voxeis
-            ! at(i - 1, j, k).is_on &&
-            ! at(i + 1, j, k).is_on &&
-            ! at(i, j - 1, k).is_on &&
-            ! at(i, j + 1, k).is_on &&
-            ! at(i, j, k - 1).is_on &&
-            ! at(i, j, k + 1).is_on
-          ) at(i, j, k).is_on = false;
+            at(i - 1, j, k).is_on &&
+            at(i + 1, j, k).is_on &&
+            at(i, j - 1, k).is_on &&
+            at(i, j + 1, k).is_on &&
+            at(i, j, k - 1).is_on &&
+            at(i, j, k + 1).is_on
+          ) {
+            at(i, j, k).is_on = false;
+           }
         }
       }
     }
