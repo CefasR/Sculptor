@@ -86,7 +86,7 @@ void Cylinder::sculpt(Canvas& c) const
       for (int j = getMinY(); j < getMaxY(); j++) {
         for (int k = getMinZ(); k < getMaxZ(); k++) {
             // Verifica se o ponto faz parte do cilindro
-            if ((pow(int(i - pos.x), 2) + pow(int(j - pos.y), 2)) <= pow(radius, 2)){
+            if ((pow(float(i) - pos.x, 2) + pow(float(j) - pos.y, 2)) < pow(radius, 2)){
               // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
               /*Surte o mesmo efeito que o código comentado acima
                 funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
@@ -126,9 +126,9 @@ void Ellipsoid::sculpt(Canvas& c) const{
       for (int k = getMinZ(); k < getMaxZ(); k++) {
         // Verifica se o ponto faz parte do elipsoide
         if (
-          pow(i - pos.x, 2) / pow(x_radius, 2) +
-          pow(j - pos.y, 2) / pow(y_radius, 2) +
-          pow(k - pos.z, 2) / pow(z_radius, 2) <= 1
+          pow(float(i) - pos.x, 2) / pow(x_radius, 2) +
+          pow(float(j) - pos.y, 2) / pow(y_radius, 2) +
+          pow(float(k) - pos.z, 2) / pow(z_radius, 2) < 1
         ){
           // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
           /*Surte o mesmo efeito que o código comentado acima
