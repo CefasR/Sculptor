@@ -53,6 +53,8 @@ unsigned Canvas::getNFaces() const {
 
 
 void Canvas::removeIrrelevantVoxels() {
+
+  int cnt = 0;
   for (int i = 0; i < dimX; ++i) {
     for (int j = 0; j < dimY; ++j) {
       for (int k = 0; k < dimZ; ++k) {
@@ -69,6 +71,7 @@ void Canvas::removeIrrelevantVoxels() {
           at(i, j, k + 1).is_on
         ) {
           at(i, j, k).is_on = false;
+          cout << ++cnt << endl;
          }
       }
     }
