@@ -41,7 +41,9 @@ void Sculptor::write(const char *Arq)
             Face 3 - plano XZ da direita
             Face 4 - plano YZ de fora
             Face 5 - plano XY de cima
+
         */
+
   for (int i = 0; i < dimX; ++i) {
     for (int j = 0; j < dimY; ++j) {
       for (int k = 0; k < dimZ; ++k) {
@@ -183,6 +185,7 @@ void Sculptor::draw() {
   }
 
   removeIrrelevantVoxels();
+
 }
 
 void Sculptor::putCylinder(int Xc, int Yc, int Z0, int Z1, int r){

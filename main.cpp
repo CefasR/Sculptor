@@ -34,7 +34,7 @@ int main(){
 
   //sculptor.putSphere(0, 0, -20, 20);
   //Crânio
-  sculptor.putEllipsoid(0, 0, -15, 20, 20, 10);
+  sculptor.putEllipsoid(0, 0, -15, 20, 20, 15);
   //Corpo
   sculptor.putCylinder(0, 0, -15, -38, 20);
 

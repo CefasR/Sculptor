@@ -37,18 +37,20 @@ struct POS_3D {
     x = pos.x; y = pos.y; z = pos.z;
   }
 
-  inline POS_3D operator+ (POS_3D pos) {
-    x += pos.x; y += pos.y; z += pos.z;
-    return *this;
+  inline POS_3D operator+ (POS_3D pos) const {
+    return POS_3D (x + pos.x, y + pos.y, z + pos.z);
   }
 
-  inline POS_3D operator- (POS_3D pos) {
+  inline POS_3D operator- (POS_3D pos) const {
     return (*this) + (-pos);
   }
 
+  inline T operator* (POS_3D pos) const{
+    return (x * pos.x) +  (y * pos.y) +  (z * pos.z);
+  }
+
   inline friend POS_3D operator- (POS_3D pos) {
-    pos.x = -pos.x; pos.y = -pos.y; pos.z = -pos.z;
-    return pos;
+    return POS_3D (-pos.x, -pos.y, -pos.z);
   }
 
   inline bool operator == (POS_3D pos) {
@@ -57,6 +59,56 @@ struct POS_3D {
 
   inline bool operator != (POS_3D pos) {
     return ! (*this == pos);
+  }
+};
+
+enum AXIS{
+  X, Y, Z
+};
+
+typedef POS_3D <float> POS_3Df;
+
+class Matrix3D {
+protected:
+    vector < POS_3Df > colunas;
+public:
+    Matrix3D () {
+      colunas.reserve(3);
+      colunas.push_back(POS_3D <float> (1.0, 0.0, 0.0));
+      colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
+      colunas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
+    }
+
+    friend POS_3Df operator* (POS_3Df pos, Matrix3D matrix) {
+      return POS_3Df ( pos * matrix.colunas.at(0),  pos * matrix.colunas.at(1), pos * matrix.colunas.at(2) );
+    }
+
+    Matrix3D operator * (Matrix3D m) const {
+      Matrix3D tmp;
+    }
+};
+
+class RotationMatrix3D : public Matrix3D{
+public:
+  RotationMatrix3D (AXIS a, float angle) {
+    colunas.reserve(3);
+    switch (a) {
+      case X:
+        colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
+        colunas.push_back(POS_3D <float> (0.0, cos(angle), sin(angle)));
+        colunas.push_back(POS_3D <float> (0.0, -sin(angle), cos(angle)));
+        break;
+      case Y:
+        colunas.push_back(POS_3D <float> (cos(angle), 0.0, sin(angle)));
+        colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
+        colunas.push_back(POS_3D <float> (-sin(angle), 0.0, -cos(angle)));
+        break;
+      case Z:
+        colunas.push_back(POS_3D <float> (cos(angle), sin(angle), 0.0));
+        colunas.push_back(POS_3D <float> (-sin(angle), cos(angle), 0.0));
+        colunas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
+        break;
+    }
   }
 };
 

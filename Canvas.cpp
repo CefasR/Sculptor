@@ -51,10 +51,12 @@ unsigned Canvas::getNFaces() const {
   return qtd;
 }
 
+typedef POS_3D <int> pInt;
 
 void Canvas::removeIrrelevantVoxels() {
+  vector <pInt> posicoes;
+  posicoes.reserve(dimX * dimY * dimZ);
 
-  int cnt = 0;
   for (int i = 0; i < dimX; ++i) {
     for (int j = 0; j < dimY; ++j) {
       for (int k = 0; k < dimZ; ++k) {
@@ -70,10 +72,13 @@ void Canvas::removeIrrelevantVoxels() {
           at(i, j, k - 1).is_on &&
           at(i, j, k + 1).is_on
         ) {
-          at(i, j, k).is_on = false;
-          cout << ++cnt << endl;
+          posicoes.push_back(pInt (i, j, k));
          }
       }
     }
+  }
+
+  for (vector <pInt>::iterator i = posicoes.begin(); i != posicoes.end(); ++i) {
+    at(*i).is_on = false;
   }
 }
