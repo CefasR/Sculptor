@@ -12,73 +12,36 @@ void Sculptor::write(const char *Arq)
   fout << "OFF" << endl;
   fout << getNVertices() << " " << getNFaces() << " " << 0 << endl;
 
-  POS_3D <int> pos;
-
-  // Desenha dodos os vértices no arquivo
-  pos = origin;
-
   for (int i = 0; i < dimX + 1; i++) {
     for (int j = 0; j < dimY + 1; j++) {
       for (int k = 0; k < dimZ + 1; k++) {
-
         POS_3D <int> pos(i, j, k);
+        POS_3D <float> current = POS_3D <float> (-0.5, -0.5, -0.5) + pos;
+        fout << current << endl;
+      }
+    }
+  }
 
-    POS_3D <float> current = POS_3D <float> (-0.5, -0.5, -0.5) + pos;
-    fout << current << endl;
-        // POS_3D <int> pos = getNormalPos (i, j, k);
-        //
-        // // Vértices da face X da esquerda
-        // POS_3D <float> P0 = POS_3D <float> (-0.5, -0.5, -0.5) + pos;
-        // POS_3D <float> P1 = POS_3D <float> ( 0.5, -0.5, -0.5) + pos;
-        // POS_3D <float> P2 = POS_3D <float> ( 0.5, -0.5,  0.5) + pos;
-        // POS_3D <float> P3 = POS_3D <float> (-0.5, -0.5,  0.5) + pos;
-        //
-        // // Vértices da face Y de dentro
-        // POS_3D <float> P4 = POS_3D <float> (-0.5,  0.5,  0.5) + pos;
-        // POS_3D <float> P5 = POS_3D <float> (-0.5,  0.5, -0.5) + pos;
-        //
-        // // Vétices da K de baixo
-        // POS_3D <float> P6 = POS_3D <float> ( 0.5,  0.5, -0.5) + pos;
-        //
-        // // Vétices da face X da direita
-        // POS_3D <float> P7 = POS_3D <float> ( 0.5,  0.5,  0.5) + pos;
-        //
-        // /*
-        // ORDEM DE DESENHO: 0 (P0), 1 (P1), 2 (P2), 3 (P3), 4 (P4), 5 (P5), 6 (P6), 7 (P7)
-        //
-        //                3 . . . . . . . 4
-        //             .  .    .       .  .
-        //          2 . . . . . . . 7     .
-        //          .     .      .  .     .
-        //          .  .  .    .    .  .  .
-        //          .     . .       .     .
-        //          .     0 . . . . . . . 5
-        //          .  .       .    .  .
-        //          1 . . . . . . . 6
-        // */
-        //
-        //
-        // if ( pos == POS_3D <int> (0, 0, 0) ) fout << P0 << endl;
-        //
-        // if ( pos.y == 0 ) {
-        //   if (pos.z == 0) fout << P1 << endl;
-        //   fout << P2 << endl;
-        //   if (pos.x == 0) fout << P3 << endl;
-        // }
-        //
-        // if (pos.x == 0) {
-        //   fout << P4 << endl;
-        //   if (pos.z == 0) fout << P5 << endl;
-        // }
-        //
-        // if (pos.z == 0) fout << P6 << endl;
-        //
-        // fout << P7 << endl;
+  /*
+                    EXPLICAÇÃO
 
-  }}}
+                       . . . . . . . . .
+                    .  .    5       .  .
+                 . . . . . . . . .     .
+                 .     .      1  .     .
+                 .  0  .    .    .  3  .
+                 .     . 4       .     .
+                 .     . . . . . . . . .
+                 .  .       2    .  .
+                 . . . . . . . . .
 
-  pos = origin;
-
+            Face 0 - plano XZ da esquerda
+            Face 1 - plano YZ de dentro
+            Face 2 - plano XY de baixo
+            Face 3 - plano XZ da direita
+            Face 4 - plano YZ de fora
+            Face 5 - plano XY de cima
+        */
   for (int i = 0; i < dimX; ++i) {
     for (int j = 0; j < dimY; ++j) {
       for (int k = 0; k < dimZ; ++k) {
@@ -86,97 +49,42 @@ void Sculptor::write(const char *Arq)
         POS_3D <int> pos(i, j, k);
 
              // Vértices da face X da esquerda
-    unsigned P0 = getVoxelVertexIndexAt(pos.x, pos.y, pos.z),
-             P1 = getVoxelVertexIndexAt(pos.x + 1, pos.y, pos.z),
-             P2 = getVoxelVertexIndexAt(pos.x + 1, pos.y, pos.z + 1),
-             P3 = getVoxelVertexIndexAt(pos.x, pos.y, pos.z + 1),
-             // Vértices da face Y de dentro
-             P4 = getVoxelVertexIndexAt(pos.x, pos.y + 1, pos.z + 1),
-             P5 = getVoxelVertexIndexAt(pos.x, pos.y + 1, pos.z),
-             // Vétices da K de baixo
-             P6 = getVoxelVertexIndexAt(pos.x + 1, pos.y + 1, pos.z),
-             // Vétices da face X da direita
-             P7 = getVoxelVertexIndexAt(pos.x + 1, pos.y + 1, pos.z + 1);
+        unsigned P0 = getVoxelVertexIndexAt(pos.x, pos.y, pos.z),
+                 P1 = getVoxelVertexIndexAt(pos.x + 1, pos.y, pos.z),
+                 P2 = getVoxelVertexIndexAt(pos.x + 1, pos.y, pos.z + 1),
+                 P3 = getVoxelVertexIndexAt(pos.x, pos.y, pos.z + 1),
+                 // Vértices da face Y de dentro
+                 P4 = getVoxelVertexIndexAt(pos.x, pos.y + 1, pos.z + 1),
+                 P5 = getVoxelVertexIndexAt(pos.x, pos.y + 1, pos.z),
+                 // Vétices da K de baixo
+                 P6 = getVoxelVertexIndexAt(pos.x + 1, pos.y + 1, pos.z),
+                 // Vétices da face X da direita
+                 P7 = getVoxelVertexIndexAt(pos.x + 1, pos.y + 1, pos.z + 1);
 
-    // Pega o voxel da posição corrente
-    Voxel v = at(pos);
+        // Pega o voxel da posição corrente
+        Voxel v = at(pos);
 
-    if (v.is_on){
-      // Face da esquerda
-      if (pos.y == 0 or !at(pos.x, pos.y - 1, pos.z).is_on )
-      fout << 4 << " " << P0 << " " << P1 << " " << P2 << " " << P3 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
-      // Face de dentro
-      if (pos.x == 0 or !at(pos.x - 1, pos.y, pos.z).is_on )
-      fout << 4 << " " << P0 << " " << P3 << " " << P4 << " " << P5 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
-      // Face de baixo
-      if (pos.z == 0 or !at(pos.x, pos.y, pos.z - 1).is_on )
-      fout << 4 << " " << P0 << " " << P5 << " " << P6 << " " << P1 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+        if (v.is_on){
+          // Face da esquerda
+          if (pos.y == 0 or !at(pos.x, pos.y - 1, pos.z).is_on )
+          fout << 4 << " " << P0 << " " << P1 << " " << P2 << " " << P3 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+          // Face de dentro
+          if (pos.x == 0 or !at(pos.x - 1, pos.y, pos.z).is_on )
+          fout << 4 << " " << P0 << " " << P3 << " " << P4 << " " << P5 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+          // Face de baixo
+          if (pos.z == 0 or !at(pos.x, pos.y, pos.z - 1).is_on )
+          fout << 4 << " " << P0 << " " << P5 << " " << P6 << " " << P1 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
 
-      // Face da direita
-      fout << 4 << " " << P5 << " " << P4 << " " << P7 << " " << P6 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
-      // Face de fora
-      fout << 4 << " " << P1 << " " << P6 << " " << P7 << " " << P2 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
-      // Face de cima
-      fout << 4 << " " << P3 << " " << P2 << " " << P7 << " " << P4 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+          // Face da direita
+          fout << 4 << " " << P5 << " " << P4 << " " << P7 << " " << P6 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+          // Face de fora
+          fout << 4 << " " << P1 << " " << P6 << " " << P7 << " " << P2 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+          // Face de cima
+          fout << 4 << " " << P3 << " " << P2 << " " << P7 << " " << P4 << " " << v.R << " " << v.G << " " << v.B << " " << v.alpha << endl;
+        }
+      }
     }
-
-  }}}
-
-  // Desenha todas as faces no arquivo
-  // for (int i = 0; i < dimX; ++i) {
-  //   for (int j = 0; j < dimY; ++j) {
-  //     for (int k = 0; k < dimZ; ++k) {
-  //       unsigned n = (i + 1) * (dimY + 1) * (dimZ + 1) + (j + 1) * (dimZ + 1);
-  //       /*
-  //                   EXPLICAÇÃO
-  //
-  //                      . . . . . . . . .
-  //                   .  .    5       .  .
-  //                . . . . . . . . .     .
-  //                .     .      1  .     .
-  //                .  0  .    .    .  3  .
-  //                .     . 4       .     .
-  //                .     . . . . . . . . .
-  //                .  .       2    .  .
-  //                . . . . . . . . .
-  //
-  //           Face 0 - plano XZ da esquerda
-  //           Face 1 - plano YZ de dentro
-  //           Face 2 - plano XY de baixo
-  //           Face 3 - plano XZ da direita
-  //           Face 4 - plano YZ de fora
-  //           Face 5 - plano XY de cima
-  //       */
-  //       Voxel current = at(i, j, k);
-  //       if ( current.is_on ) {
-  //         // As faces 4, 3 e 5 sempre serão desenhadas,
-  //         //assim todo voxel terá ao menos 3 faces desenhadas no arquivo
-  //         //qtd += 3;
-  //         // Verifica se a face 0 deve ser desenhada (face XZ da esqueda)
-  //         // A codição é que esse voxel esteja na extremidade esquerda (j == 0)
-  //         // ou que voxel do lado esquerdo não esteja marcado para ser desenhado
-  //         // Desenha a face 0
-  //         if (j == 0 or !at(i, j - 1, k).is_on ) {
-  //           fout << 4 << " "
-  //                << current.R << " "
-  //                << current.G << " "
-  //                << current.B << " "
-  //                << current.alpha << " "
-  //                <<
-  //         }
-  //         // Verifica se a face 1 deve ser desenhada (face YK de dentro)
-  //         // A codição é que esse voxel esteja na extremidade de dentro (i == 0)
-  //         // ou que voxel do lado dentro não esteja marcado para ser desenhado
-  //         //if (i == 0 or !at(i - 1, j, k).is_on ) ++qtd;
-  //         // Verifica se a face 2 deve ser desenhada (face XY de dentro)
-  //         // A codição é que esse voxel esteja na extremidade de baixo (k == 0)
-  //         // ou que voxel do lado de baixo não esteja marcado para ser desenhado
-  //         //if (k == 0 or !at(i, j, k - 1).is_on ) ++qtd;
-  //       }
-  //     }
-  //   }
-  // }
-
+  }
 }
 
 void Sculptor::putVoxel(int X, int Y, int Z) {
