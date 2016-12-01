@@ -68,23 +68,32 @@ enum AXIS{
 
 typedef POS_3D <float> POS_3Df;
 
-class Matrix3D {
+class Matrix3D{
 protected:
-    vector < POS_3Df > colunas;
+    vector <POS_3Df> colunas;
+    vector <POS_3Df> linhas;
 public:
     Matrix3D () {
       colunas.reserve(3);
       colunas.push_back(POS_3D <float> (1.0, 0.0, 0.0));
       colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
       colunas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
-    }
+      linhas.push_back(POS_3D <float> (1.0, 0.0, 0.0));
+      linhas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
+      linhas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
 
+    }
+    //função que multiplica um vetor de posições por uma matriz;
     friend POS_3Df operator* (POS_3Df pos, Matrix3D matrix) {
       return POS_3Df ( pos * matrix.colunas.at(0),  pos * matrix.colunas.at(1), pos * matrix.colunas.at(2) );
     }
-
-    Matrix3D operator * (Matrix3D m) const {
+    //função que multiplica matrizes de rotação
+    inline Matrix3D operator * (Matrix3D M) const {
       Matrix3D tmp;
+      for(int i = 0; i<3;i++){
+            tmp.linhas.at(i) = (this->linhas.at(i) * M); //Deve tá errada! Tô usando a sobrecarga do operador acima.
+      }
+      return tmp;
     }
 };
 
@@ -94,7 +103,7 @@ public:
     colunas.reserve(3);
     switch (a) {
       case X:
-        colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
+        colunas.push_back(POS_3D <float> (1.0, 0.0, 0.0));
         colunas.push_back(POS_3D <float> (0.0, cos(angle), sin(angle)));
         colunas.push_back(POS_3D <float> (0.0, -sin(angle), cos(angle)));
         break;
