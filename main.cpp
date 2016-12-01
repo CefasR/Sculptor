@@ -5,11 +5,6 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
-  // // Marrom
-  sculptor.setColor(121/255.0, 85/255.0, 72/255.0, 1.0);
-  // // íris
-  sculptor.putEllipsoid(0, 21, -22, 4, 2, 4);
-
   // Azul
   sculptor.setColor(21/255.0, 31/255.0, 200/255.0, 1.0);
 
@@ -49,7 +44,13 @@ int main(){
 
   //Olho
   sculptor.setColor(1.0, 1.0, 1.0, 1.0);
-  sculptor.putEllipsoid(0, 16, -22, 8, 6, 8);
+  sculptor.putEllipsoid(0, 20, -22, 5, 1, 5);
+
+  // // Marrom
+  sculptor.setColor(121/255.0, 85/255.0, 72/255.0, 1.0);
+  // // íris
+  sculptor.putEllipsoid(0, 20, -22, 3, 2, 3);
+
 
   cout << "Mínimo: " << sculptor.getMinXYZ() << endl;
   cout << "Máximo: " << sculptor.getMaxXYZ() << endl;
