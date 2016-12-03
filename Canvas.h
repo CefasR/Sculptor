@@ -81,28 +81,31 @@ protected:
     }
   }
 public:
-  TransformationMatrix () {
-    fill();
+  TransformationMatrix (bool is_identity = true) {
+    fill(is_identity);
   }
 
   inline TransformationMatrix & operator * (TransformationMatrix matrix) {
-    fill();
-    for (unsigned i = 0; i < 4; i++)
-      for (unsigned j = 0; j < 4; j++)
-        for (unsigned k = 0; k < 4; k++)
-          m[i][j] += m[i][k] * matrix.m[k][j];
+    TransformationMatrix tmp(false);
+    for (unsigned i = 0; i < 4; i++) {
+      for (unsigned j = 0; j < 4; j++) {
+        for (unsigned k = 0; k < 4; k++) {
+          tmp.m[i][j] += m[i][k] * matrix.m[k][j];
+        }
+      }
+    }
 
-    return *this;
+    return *this = tmp;
   }
 
   inline const TransformationMatrix operator * (TransformationMatrix matrix) const {
-    TransformationMatrix tmp;
+    TransformationMatrix tmp(false);
     return tmp = (*this ) * matrix;
   }
 
-  POS_3D <int> transform (POS_3D <int> pos) {
+  POS_3D <float> transform (POS_3D <float> pos) {
     // Vetor resultante
-    return POS_3D <int> (
+    return POS_3D <float> (
       pos.x * m[0][0] + pos.y * m[0][1] + pos.z * m[0][2] + m[0][3],
       pos.x * m[1][0] + pos.y * m[1][1] + pos.z * m[1][2] + m[1][3],
       pos.x * m[2][0] + pos.y * m[2][1] + pos.z * m[2][2] + m[2][3]
@@ -114,14 +117,14 @@ public:
 class TranslationMatrix : public TransformationMatrix {
 public:
   inline TranslationMatrix (POS_3D <int> v) : TransformationMatrix() {
-    fill(true); m[0][3] = v.x; m[1][3] = v.y; m[2][3] = v.z;
+    m[0][3] = v.x; m[1][3] = v.y; m[2][3] = v.z;
   }
 };
 
 
 class RotationMatriz : public TransformationMatrix {
 public:
-  RotationMatriz (float angle, AXIS & a, POS_3D <int> v = origin ) {
+  RotationMatriz (float angle, AXIS & a, POS_3D <float> v = origin ) {
     fill(true);
 
     switch (a) {
