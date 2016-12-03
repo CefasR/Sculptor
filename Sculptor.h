@@ -35,6 +35,10 @@ public:
                      int r);
     void cutCylinder(int Xc, int Yc, int Z0, int Z1,
                      int r);
+    void putToriod(int Xc, int Yc, int Zc,
+                    int Rt, int Rp);
+    void cutToriod(int Xc, int Yc, int Zc,
+                    int Rt, int Rp);
     void cleanVoxels(void);
     void write(const char *Arq);
 

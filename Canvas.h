@@ -64,6 +64,11 @@ struct POS_3D {
 
 const POS_3D <unsigned int> origin(0, 0, 0);
 
+template <class T>
+T ManhattanDistance(POS_3D <T> a, POS_3D <T> b) {
+  return abs(a.x - b.x) + abs(a.y - b.y) + abs(a.z - b.z);
+}
+
 enum AXIS{
   X, Y, Z
 };

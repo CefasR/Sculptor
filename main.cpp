@@ -5,6 +5,9 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
+  // Toriode
+  // sculptor.putToriod(20, 10, 2, 30, 10);
+
   // // Marrom
   sculptor.setColor(121/255.0, 85/255.0, 72/255.0, 1.0);
   // // íris

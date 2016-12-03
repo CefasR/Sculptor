@@ -159,3 +159,38 @@ inline int Ellipsoid::getMinY() const {
 inline int Ellipsoid::getMinZ() const {
   return (pos.z - z_radius);
 }
+
+
+void Toroid::sculpt(Canvas& c) const{
+  for (int i = getMinX(); i < getMaxX(); i++) {
+    for (int j = getMinY(); j < getMaxY(); j++) {
+      for (int k = getMinZ(); k < getMaxZ(); k++) {
+        // Verifica se o ponto faz parte do toróide
+        if (
+          pow( t_radius - sqrt( pow(i - pos.x, 2) + pow(j - pos.y, 2) ), 2) + pow(k - pos.z, 2) < pow(p_radius, 2)
+        ){
+          c.at(c.getNormalPos(i, j, k)) = (*this);
+        }
+      }
+    }
+  }
+}
+
+inline int Toroid::getMaxX() const {
+  return (pos.x + p_radius + t_radius);
+}
+inline int Toroid::getMaxY() const {
+  return (pos.y + p_radius + t_radius);
+}
+inline int Toroid::getMaxZ() const {
+  return (pos.z + p_radius + t_radius);
+}
+inline int Toroid::getMinX() const {
+  return (pos.x - p_radius - t_radius);
+}
+inline int Toroid::getMinY() const {
+  return (pos.y - p_radius - t_radius);
+}
+inline int Toroid::getMinZ() const {
+  return (pos.z - p_radius - t_radius);
+}

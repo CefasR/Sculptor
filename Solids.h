@@ -158,6 +158,32 @@ public:
       int getMinZ() const;
 };
 
+class Toroid : public Solid{
+  float t_radius, p_radius;
+
+public:
+    inline Toroid (
+        // Posição XYZ
+        float x=0.0, float y=0.0, float z=0.0,
+        // Cor + Alpha
+        float r=0.0, float g=0.0, float b=0.0, float a = 1.0,
+        // Ativo (sim ou não)
+        bool on = true,
+        // Raios do toroide
+        float tR = 1.0, float pR = 1.0
+      ) : Solid(x, y, z, r, g, b, a, on), t_radius(tR), p_radius(pR) {}
+
+      void sculpt(Canvas& c) const;
+
+      int getMaxX() const;
+      int getMaxY() const;
+      int getMaxZ() const;
+
+      int getMinX() const;
+      int getMinY() const;
+      int getMinZ() const;
+};
+
 typedef Solid *pSolid;
 
 #endif //_SOLIDS_H_
