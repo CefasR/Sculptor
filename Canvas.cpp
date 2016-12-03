@@ -54,8 +54,8 @@ unsigned Canvas::getNFaces() const {
 typedef POS_3D <int> pInt;
 
 void Canvas::removeIrrelevantVoxels() {
-  vector <pInt> posicoes;
-  posicoes.reserve(dimX * dimY * dimZ);
+  //vector <pInt> posicoes;
+  //posicoes.reserve(dimX * dimY * dimZ);
 
   for (int i = 0; i < dimX; ++i) {
     for (int j = 0; j < dimY; ++j) {
@@ -72,13 +72,18 @@ void Canvas::removeIrrelevantVoxels() {
           at(i, j, k - 1).is_on &&
           at(i, j, k + 1).is_on
         ) {
-          posicoes.push_back(pInt (i, j, k));
+          at(i, j, k).alpha = 0.0;
          }
       }
     }
   }
 
-  for (vector <pInt>::iterator i = posicoes.begin(); i != posicoes.end(); ++i) {
-    at(*i).is_on = false;
-  }
+
+    for (int i = 0; i < dimX; ++i) {
+      for (int j = 0; j < dimY; ++j) {
+        for (int k = 0; k < dimZ; ++k) {
+          if (at(i, j, k).alpha == 0.0) at(i, j, k).is_on = false;
+        }
+      }
+    }
 }

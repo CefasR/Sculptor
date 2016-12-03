@@ -62,59 +62,89 @@ struct POS_3D {
   }
 };
 
+const POS_3D <unsigned int> origin(0, 0, 0);
+
 enum AXIS{
   X, Y, Z
 };
 
-typedef POS_3D <float> POS_3Df;
-
-class Matrix3D {
+class TransformationMatrix {
 protected:
-    vector < POS_3Df > colunas;
+  float m[4][4];
+
+  inline void fill (bool is_identity = false) {
+    for (unsigned i = 0; i < 4; i++) {
+      for (unsigned j = 0; j < 4; j++) {
+        if (is_identity && i == j)  m[i][j] = 1;
+        else m[i][j] = 0;
+      }
+    }
+  }
 public:
-    Matrix3D () {
-      colunas.reserve(3);
-      colunas.push_back(POS_3D <float> (1.0, 0.0, 0.0));
-      colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
-      colunas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
-    }
+  TransformationMatrix () {
+    fill();
+  }
 
-    friend POS_3Df operator* (POS_3Df pos, Matrix3D matrix) {
-      return POS_3Df ( pos * matrix.colunas.at(0),  pos * matrix.colunas.at(1), pos * matrix.colunas.at(2) );
-    }
+  inline TransformationMatrix & operator * (TransformationMatrix matrix) {
+    fill();
+    for (unsigned i = 0; i < 4; i++)
+      for (unsigned j = 0; j < 4; j++)
+        for (unsigned k = 0; k < 4; k++)
+          m[i][j] += m[i][k] * matrix.m[k][j];
 
-    Matrix3D operator * (Matrix3D m) const {
-      Matrix3D tmp;
-    }
+    return *this;
+  }
+
+  inline const TransformationMatrix operator * (TransformationMatrix matrix) const {
+    TransformationMatrix tmp;
+    return tmp = (*this ) * matrix;
+  }
+
+  POS_3D <int> transform (POS_3D <int> pos) {
+    // Vetor resultante
+    return POS_3D <int> (
+      pos.x * m[0][0] + pos.y * m[0][1] + pos.z * m[0][2] + m[0][3],
+      pos.x * m[1][0] + pos.y * m[1][1] + pos.z * m[1][2] + m[1][3],
+      pos.x * m[2][0] + pos.y * m[2][1] + pos.z * m[2][2] + m[2][3]
+    );
+  }
+
 };
 
-class RotationMatrix3D : public Matrix3D{
+class TranslationMatrix : public TransformationMatrix {
 public:
-  RotationMatrix3D (AXIS a, float angle) {
-    colunas.reserve(3);
+  inline TranslationMatrix (POS_3D <int> v) : TransformationMatrix() {
+    fill(true); m[0][3] = v.x; m[1][3] = v.y; m[2][3] = v.z;
+  }
+};
+
+
+class RotationMatriz : public TransformationMatrix {
+public:
+  RotationMatriz (float angle, AXIS & a, POS_3D <int> v = origin ) {
+    fill(true);
+
     switch (a) {
       case X:
-        colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
-        colunas.push_back(POS_3D <float> (0.0, cos(angle), sin(angle)));
-        colunas.push_back(POS_3D <float> (0.0, -sin(angle), cos(angle)));
+        m[1][1] = cos(angle);   m[1][2] = sin(angle);
+        m[2][1] = -sin(angle);  m[2][2] = cos(angle);
         break;
+
       case Y:
-        colunas.push_back(POS_3D <float> (cos(angle), 0.0, sin(angle)));
-        colunas.push_back(POS_3D <float> (0.0, 1.0, 0.0));
-        colunas.push_back(POS_3D <float> (-sin(angle), 0.0, -cos(angle)));
+        m[0][0] = cos(angle);  m[0][2] = -sin(angle);
+        m[2][0] = sin(angle);  m[2][2] = cos(angle);
         break;
+
       case Z:
-        colunas.push_back(POS_3D <float> (cos(angle), sin(angle), 0.0));
-        colunas.push_back(POS_3D <float> (-sin(angle), cos(angle), 0.0));
-        colunas.push_back(POS_3D <float> (0.0, 0.0, 1.0));
+        m[0][0] = cos(angle);   m[0][1] = sin(angle);
+        m[1][0] = -sin(angle);  m[1][1] = cos(angle);
         break;
+
     }
   }
 };
 
 typedef vector<Voxel>::iterator VoxelIterator;
-
-const POS_3D <unsigned int> origin(0, 0, 0);
 
 // Classe que auxilia na manipulação de uma matriz 3D de voxels
 class Canvas {
