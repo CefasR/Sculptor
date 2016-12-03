@@ -31,10 +31,10 @@ public:
                       int Rx, int Ry, int Rz);
     void cutEllipsoid(int Xc, int Yc, int Zc,
                       int Rx, int Ry, int Rz);
-    void putCylinder(int Xc, int Yc, int Z0, int Z1,
-                     int r);
-    void cutCylinder(int Xc, int Yc, int Z0, int Z1,
-                     int r);
+    void putCylinder(int Xc, int Zc, int Y0, int Y1,
+                      int r);
+    void cutCylinder(int Xc, int Zc, int Y0, int Y1,
+                      int r);
     void putToriod(int Xc, int Yc, int Zc,
                     int Rt, int Rp);
     void cutToriod(int Xc, int Yc, int Zc,
