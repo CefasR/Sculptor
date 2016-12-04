@@ -7,25 +7,25 @@ using namespace std;
 class Solid : protected Voxel {
 protected:
   POS_3D <float> pos;
-
+  TransformationMatrix TM;
 public:
-
   inline Solid (
-    // Posição XYZ
-    float x=0.0, float y=0.0, float z=0.0,
-    // Cor + Alpha
+    float x=0.0,
+    float y=0.0,
+    float z=0.0,
     float r=0.0, float g=0.0, float b=0.0, float a=1.0,
-    // Ativo (sim ou não)
     bool on=true
-  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) { }
+    ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on){}
 
   // Método virtual para sculpt o Solid
   virtual void sculpt(Canvas& c) const = 0;
 
-
-  // Métodos opcionais
-  // void trasladar(int x, int y, int z);
-  // void rotacionar(float a_x_y, float a_x_z, float a_y_z);
+  inline void Translation(float x, float y, float z){
+    TM = TranslationMatrix(POS_3D <float>(x, y, z)) * TM;
+  }
+  inline void Rotation(float angle, AXIS a, float a_x_y = 0.0, float a_x_z =0.0, float a_y_z=0.0){
+    TM = RotationMatrix(angle, a, POS_3D <float>(a_x_y, a_x_z, a_y_z)) * TM;
+  }
 
   virtual int getMaxX() const = 0;
   virtual int getMaxY() const = 0;
@@ -42,11 +42,6 @@ public:
   inline void setPos(float x, float y, float z) {
     pos.x = x; pos.y = y; pos.z = z;
   }
-
-  inline void translade(float x, float y, float z) {
-    pos.x += x; pos.y += y; pos.z += z;
-  }
-
   inline virtual ~Solid() {}
 
 };
@@ -77,7 +72,6 @@ public:
   int getMinY() const;
   int getMinZ() const;
 };
-
 
 // class Sphere : public Solid{
 //   unsigned int radius;

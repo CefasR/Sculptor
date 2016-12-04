@@ -1,47 +1,110 @@
 #include "Solids.h"
+
 using namespace std;
 
 void Box::sculpt(Canvas& c) const
 {
-
   cout << "Sculpting Box..." << endl;
-  for (int i = getMinX(); i < getMaxX(); i++) {
-    for (int j = getMinY(); j < getMaxY(); j++) {
-      for (int k = getMinZ(); k < getMaxZ(); k++) {
+  for (int i = pos.x - (width / 2.0); i < pos.x + (width / 2.0); i++) {
+    for (int j = pos.y - (length / 2.0); j < pos.y + (length / 2.0); j++) {
+      for (int k = pos.z - (height / 2.0); k < pos.z + (height / 2.0); k++) {
         // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
         /*Surte o mesmo efeito que o código comentado acima
           funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
           que converte *this (da classe Solid) em um elemento do tipo voxel)*/
 
-        c.at(c.getNormalPos(i, j, k)) = (*this);
-
+          POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
+          cout << p << endl;
+          c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
       }
     }
   }
 }
 
-
+//tá aqui ainda?
 inline int Box::getMaxX() const {
-  return (pos.x + width / 2.0);
+  int max;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+        if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) max = current.x;
+        if (current.x > max) max = current.x;
+      }
+    }
+  }
+  return max + 1;
 }
+
+// essa e a de y mas tem x y e z isso e irrelevante e so para verificar se o forr ta na primeira iteracao ok e ta errado
 inline int Box::getMaxY() const {
-  return (pos.y + length / 2.0);
+  int max;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+        if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) max = current.y;
+        if (current.y > max) max = current.y;
+      }
+    }
+  }
+  return max + 1;
 }
 inline int Box::getMaxZ() const {
-  return (pos.z + height / 2.0);
+  int max;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+        if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) max = current.z;
+        if (current.z > max) max = current.z; //cefas , oi ali né x n? aqui e para pegar o maximo de z mas olha lá em x
+      }
+    }
+  }
+  return max + 1;
 }
 inline int Box::getMinX() const {
-  return (pos.x - width / 2.0);
+  int min;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+        if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) min = current.x;
+        if (current.x < min) min = current.x;
+      }
+    }
+  }
+  return min;
 }
 inline int Box::getMinY() const {
-  return (pos.y - length / 2.0);
+  int min;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+       if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) min = current.y;
+        if (current.y < min) min = current.y;
+      }
+    }
+  }
+  return min;
 }
 inline int Box::getMinZ() const {
-  return (pos.z - height / 2.0);
+  int min;
+  for (int i = pos.x - (width / 2.0); i <= pos.x + (width / 2.0); i++){
+    for (int j = pos.y - (length / 2.0); j <= pos.y + (length / 2.0); j++){
+      for (int k = pos.z - (height / 2.0); k <= pos.z + (height / 2.0); k++){
+        POS_3D <float> current = TM.transform(POS_3D <float> (i, j, k));
+        if (i == pos.x - (width / 2.0) && j == pos.y - (length / 2.0) && k == pos.y - (length / 2.0)) min = current.z;
+        if (current.z < min) min = current.z;
+      }
+    }
+  }
+  return min;
 }
 
 
-// void Sphere::sculpt(Canvas& c) const
+// void Sphere::sculpt(Canvas& c) constv
 // {
 //   for (int i = pos.x - radius; i < pos.x + radius; i++) {
 //     for (int j = pos.y - radius; j < pos.y + radius; j++) {
@@ -91,7 +154,8 @@ void Cylinder::sculpt(Canvas& c) const
               /*Surte o mesmo efeito que o código comentado acima
                 funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
                 que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-              c.at(c.getNormalPos(i, j, k)) = (*this);
+                POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
+                c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
             }
         }
       }
@@ -119,6 +183,8 @@ inline int Cylinder::getMinZ() const {
 }
 
 void Ellipsoid::sculpt(Canvas& c) const{
+
+  cout << "Sculpting a Ellipsoid..." << endl;
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
   for (int i = getMinX(); i < getMaxX(); i++) {
@@ -134,8 +200,9 @@ void Ellipsoid::sculpt(Canvas& c) const{
           /*Surte o mesmo efeito que o código comentado acima
             funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
             que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-          c.at(c.getNormalPos(i, j, k)) = (*this);
-        }
+            POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
+            c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
+          }
       }
     }
   }
