@@ -76,7 +76,6 @@ enum AXIS{
 class TransformationMatrix {
 protected:
   float m[4][4];
-
   inline void fill (bool is_identity = false) {
     for (unsigned i = 0; i < 4; i++) {
       for (unsigned j = 0; j < 4; j++) {
@@ -108,7 +107,7 @@ public:
     return tmp = (*this ) * matrix;
   }
 
-  POS_3D <float> transform (POS_3D <float> pos) {
+  POS_3D <float> transform (POS_3D <float> pos) const {
     // Vetor resultante
     return POS_3D <float> (
       pos.x * m[0][0] + pos.y * m[0][1] + pos.z * m[0][2] + m[0][3],
@@ -121,17 +120,16 @@ public:
 
 class TranslationMatrix : public TransformationMatrix {
 public:
-  inline TranslationMatrix (POS_3D <int> v) : TransformationMatrix() {
+  inline TranslationMatrix (POS_3D <float> v) : TransformationMatrix(){
     m[0][3] = v.x; m[1][3] = v.y; m[2][3] = v.z;
   }
 };
 
 
-class RotationMatriz : public TransformationMatrix {
+class RotationMatrix : public TransformationMatrix {
 public:
-  RotationMatriz (float angle, AXIS & a, POS_3D <float> v = origin ) {
+  RotationMatrix (float angle, AXIS & a) {
     fill(true);
-
     switch (a) {
       case X:
         m[1][1] = cos(angle);   m[1][2] = sin(angle);
@@ -155,12 +153,11 @@ public:
 typedef vector<Voxel>::iterator VoxelIterator;
 
 // Classe que auxilia na manipulação de uma matriz 3D de voxels
-class Canvas {
+class Canvas{
 protected:
   unsigned int dimX, dimY, dimZ;
   vector <Voxel> x;
   POS_3D <int> minXYZ;
-
   // Inicializa o canvas com os tamanhos especificados
   inline void initialize(unsigned dx, unsigned dy, unsigned dz, int mx=0, int my=0, int mz=0)
   {
@@ -172,7 +169,7 @@ protected:
 public:
 
   // Retorna a posição normalizada
-  inline const POS_3D <unsigned int> getNormalPos (int x, int y, int z) { return POS_3D <unsigned int> ( (x - minXYZ.x), (y - minXYZ.y), (z - minXYZ.z) ); }
+  inline POS_3D <unsigned int> getNormalPos (int x, int y, int z) { return POS_3D <unsigned int> ( (x - minXYZ.x), (y - minXYZ.y), (z - minXYZ.z) ); }
 
   inline Canvas (unsigned dx=0, unsigned dy=0, unsigned dz=0, int mx=0, int my=0, int mz=0) { initialize(dx, dy, dz, mx, my, mz); }
 

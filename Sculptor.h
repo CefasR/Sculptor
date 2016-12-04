@@ -42,6 +42,13 @@ public:
     void cleanVoxels(void);
     void write(const char *Arq);
 
+
+    inline Solid & getSolidAt(unsigned n){
+        list <pSolid> :: iterator i = l.begin();
+        advance(i, n);
+        return *(*i);
+    }
+
     // Retorna a extremidade mínima
     POS_3D <int> getMinXYZ();
 
