@@ -157,42 +157,110 @@ void Cylinder::sculpt(Canvas& c) const
   // até as respectivas posições do centro acrescidas ao respectivo raio
 
   cout << "Sculpting a Cylinder..." << endl;
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
 
-    for (int i = getMinX(); i < getMaxX(); i++) {
-      for (int j = getMinY(); j < getMaxY(); j++) {
-        for (int k = getMinZ(); k < getMaxZ(); k++) {
-            // Verifica se o ponto faz parte do cilindro
-            if ((pow(float(i) - pos.x, 2) + pow(float(k) - pos.z, 2)) < pow(radius, 2)){
-              // c.at(i, j, k) = Voxel(R, G, B, alpha, is_on);
-              /*Surte o mesmo efeito que o código comentado acima
-                funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
-                que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-                POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
-                c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
+  for (float i = minP.x; i <= maxP.x; i += 0.5) {
+    for (float j = minP.y; j <= maxP.y; j += 0.5) {
+      for (float k = minP.z; k <= maxP.z; k += 0.5) {
+        // Verifica se o ponto faz parte do cilindro
+          if ((pow(float(i) - pos.x, 2) + pow(float(k) - pos.z, 2)) < pow(radius, 2)){
+              POS_3D <int> p = round( TM.transform(POS_3D <float>(i,j,k)) );
+              c.at(c.getNormalPos(p.x, p.y, p.z )) = (*this);
+                }
             }
         }
-      }
     }
 }
 
 
 int Cylinder::getMaxX() const {
-  return (pos.x + radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) max = current.x;
+            if (current.x > max) max = current.x;
+          }
+        }
+      }
+  return max + 1;
 }
+
 int Cylinder::getMaxY() const {
-  return (float(pos.y) + (height / 2.0));
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) max = current.y;
+            if (current.y > max) max = current.y;
+          }
+        }
+      }
+  return max + 1;
 }
+
 int Cylinder::getMaxZ() const {
-  return (pos.z + radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) max = current.z;
+            if (current.z > max) max = current.z;
+          }
+        }
+      }
+  return max + 1;
 }
 int Cylinder::getMinX() const {
-  return (pos.x - radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) min = current.x;
+        if (current.x < min) min = current.x;
+      }
+    }
+  }
+  return min;
 }
+
 int Cylinder::getMinY() const {
-  return (float(pos.y) - (height / 2.0));
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) min = current.y;
+        if (current.y < min) min = current.y;
+      }
+    }
+  }
+  return min;
 }
+
 int Cylinder::getMinZ() const {
-  return (pos.z - radius);
+
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - radius && j == pos.y - (height / 2.0) && k == pos.z - radius) min = current.z;
+        if (current.z < min) min = current.z;
+      }
+    }
+  }
+  return min;
 }
 
 inline POS_3D <int> Cylinder::getLimMax() const {
@@ -206,12 +274,12 @@ inline POS_3D <int> Cylinder::getLimMin() const {
 void Ellipsoid::sculpt(Canvas& c) const{
 
   cout << "Sculpting a Ellipsoid..." << endl;
-  // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
-  // até as respectivas posições do centro acrescidas ao respectivo raio
-  for (int i = getMinX(); i < getMaxX(); i++) {
-    for (int j = getMinY(); j < getMaxY(); j++) {
-      for (int k = getMinZ(); k < getMaxZ(); k++) {
-        // Verifica se o ponto faz parte do elipsoide
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+
+  for (float i = minP.x; i <= maxP.x; i += 0.5) {
+    for (float j = minP.y; j <= maxP.y; j += 0.5) {
+      for (float k = minP.z; k <= maxP.z; k += 0.5) {
+          // Verifica se o ponto faz parte do elipsoide
         if (
           pow(float(i) - pos.x, 2) / pow(x_radius, 2) +
           pow(float(j) - pos.y, 2) / pow(y_radius, 2) +
@@ -221,8 +289,8 @@ void Ellipsoid::sculpt(Canvas& c) const{
           /*Surte o mesmo efeito que o código comentado acima
             funciona porque Solid herda da struct Voxel, assim o C++ faz um "casting",
             que converte *this (da classe Solid) em um elemento do tipo voxel)*/
-            POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
-            c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
+            POS_3D <int> p = round( TM.transform(POS_3D <float>(i,j,k)) );
+            c.at(c.getNormalPos(p.x, p.y, p.z )) = (*this);
           }
       }
     }
@@ -230,23 +298,95 @@ void Ellipsoid::sculpt(Canvas& c) const{
 }
 
 int Ellipsoid::getMaxX() const {
-  return (pos.x + x_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) max = current.x;
+            if (current.x > max) max = current.x;
+          }
+        }
+      }
+  return max + 1;
 }
+
 int Ellipsoid::getMaxY() const {
-  return (pos.y + y_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) max = current.y;
+            if (current.y > max) max = current.y;
+          }
+        }
+      }
+  return max + 1;
 }
+
 int Ellipsoid::getMaxZ() const {
-  return (pos.z + z_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) max = current.z;
+            if (current.z > max) max = current.z;
+          }
+        }
+      }
+  return max + 1;
 }
+
 int Ellipsoid::getMinX() const {
-  return (pos.x - x_radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) min = current.x;
+        if (current.x < min) min = current.x;
+      }
+    }
+  }
+  return min;
 }
 int Ellipsoid::getMinY() const {
-  return (pos.y - y_radius);
+
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) min = current.y;
+        if (current.y < min) min = current.y;
+      }
+    }
+  }
+  return min;
 }
 int Ellipsoid::getMinZ() const {
-  return (pos.z - z_radius);
+
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  int min;
+  for (int i = minP.x; i <= maxP.x; i++) {
+    for (int j = minP.y; j <= maxP.y; j++) {
+      for (int k = minP.z; k <= maxP.z; k++) {
+        POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+        if (i == pos.x - x_radius && j == pos.y - y_radius && k == pos.z - z_radius) min = current.z;
+        if (current.z < min) min = current.z;
+      }
+    }
+  }
+  return min;
 }
+
 
 inline POS_3D <int> Ellipsoid::getLimMax() const {
   return POS_3D <int> (pos.x + x_radius, pos.y + y_radius, pos.z + z_radius );
@@ -256,38 +396,114 @@ inline POS_3D <int> Ellipsoid::getLimMin() const {
   return POS_3D <int> (pos.x - x_radius, pos.y - y_radius, pos.z - z_radius );
 }
 
+
+
+
+
 void Toroid::sculpt(Canvas& c) const{
-  for (int i = getMinX(); i < getMaxX(); i++) {
-    for (int j = getMinY(); j < getMaxY(); j++) {
-      for (int k = getMinZ(); k < getMaxZ(); k++) {
+    cout << "Sculpting Toroid..." << endl;
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+
+      for (float i = minP.x; i <= maxP.x; i += 0.5) {
+        for (float j = minP.y; j <= maxP.y; j += 0.5) {
+          for (float k = minP.z; k <= maxP.z; k += 0.5) {
         // Verifica se o ponto faz parte do toróide
-        if (
-          pow( t_radius - sqrt( pow(i - pos.x, 2) + pow(j - pos.y, 2) ), 2) + pow(k - pos.z, 2) < pow(p_radius, 2)
-        ){
-          c.at(c.getNormalPos(i, j, k)) = (*this);
+            if (
+              pow( t_radius - sqrt( pow(i - pos.x, 2) + pow(j - pos.y, 2) ), 2) + pow(k - pos.z, 2) < pow(p_radius, 2)
+            ){
+              POS_3D <int> p = round( TM.transform(POS_3D <float>(i,j,k)) );
+              c.at(c.getNormalPos(p.x, p.y, p.z )) = (*this);
+            }
+          }
         }
       }
-    }
-  }
 }
 
 int Toroid::getMaxX() const {
-  return (pos.x + p_radius + t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) max = current.x;
+            if (current.x > max) max = current.x;
+          }
+        }
+      }
+  return max + 1;
 }
 int Toroid::getMaxY() const {
-  return (pos.y + p_radius + t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) max = current.y;
+            if (current.y > max) max = current.y;
+          }
+        }
+      }
+  return max + 1;
 }
 int Toroid::getMaxZ() const {
-  return (pos.z + p_radius + t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) max = current.z;
+            if (current.z > max) max = current.z;
+          }
+        }
+      }
+  return max + 1;
+
 }
 int Toroid::getMinX() const {
-  return (pos.x - p_radius - t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) min = current.x;
+            if (current.x < min) min = current.x;
+          }
+        }
+      }
+  return min;
+
 }
 int Toroid::getMinY() const {
-  return (pos.y - p_radius - t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) min = current.y;
+            if (current.y < min) min = current.y;
+          }
+        }
+      }
+  return min;
 }
 int Toroid::getMinZ() const {
-  return (pos.z - p_radius - t_radius);
+    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - p_radius - t_radius && j == pos.y - p_radius - t_radius && k == pos.z - p_radius - t_radius) min = current.z;
+            if (current.z < min) min = current.z;
+          }
+        }
+      }
+  return min;
 }
 
 inline POS_3D <int> Toroid::getLimMax() const {

@@ -5,6 +5,7 @@ using namespace std;
 int main(){
   Sculptor sculptor;
 
+
   sculptor.setColor(10/255.0, 30/255.0, 200/255.0, 1.0);
   sculptor.putBox(0, 50, 0, 50, 0, 50);
   sculptor.cutBox(1, 49, 1, 49, 1, 49);
