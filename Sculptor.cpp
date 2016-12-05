@@ -202,3 +202,11 @@ void Sculptor::putToriod(int Xc, int Yc, int Zc, int Rt, int Rp) {
 void Sculptor::cutToriod(int Xc, int Yc, int Zc, int Rt, int Rp) {
   l.push_back(new Toroid(Xc, Yc, Zc, R, G, B, alpha, false, abs(Rt), abs(Rp)) );
 }
+
+
+void Sculptor::putCylinder(int Xc, int Yc, int Z0, int Z1, int r) {
+  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, true, abs(r), abs(Z1 - Z0) ));
+}
+void Sculptor::cutCylinder(int Xc, int Yc, int Z0, int Z1, int r) {
+  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, false, abs(r), abs(Z1 - Z0) ));
+}

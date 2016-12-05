@@ -172,6 +172,35 @@ public:
       int getMinZ() const;
 };
 
+class Cone : public Solid {
+protected:
+  POS_3D <int> getLimMin() const;
+  POS_3D <int> getLimMax() const;
+
+  float x_radius, y_radius, height;
+public:
+  inline Cone (
+    // Posição XYZ
+    float x=0.0, float y=0.0, float z=0.0,
+    // Cor + Alpha
+    float r=0.0, float g=0.0, float b=0.0, float a = 1.0,
+    // Ativo (sim ou não)
+    bool on = true,
+    // Raios do toroide
+    float xR = 1.0, float yR = 1.0, float h = 1.0
+  ) : Solid(x, y, z, r, g, b, a, on), x_radius(xR), y_radius(yR), height(h) {}
+
+  void sculpt(Canvas& c) const;
+
+  int getMaxX() const;
+  int getMaxY() const;
+  int getMaxZ() const;
+
+  int getMinX() const;
+  int getMinY() const;
+  int getMinZ() const;
+};
+
 typedef Solid *pSolid;
 
 #endif //_SOLIDS_H_

@@ -35,6 +35,10 @@ public:
                       int r);
     void cutCylinder(int Xc, int Zc, int Y0, int Y1,
                       int r);
+    void putCone(int Xc, int Yc, int Z0, int Z1,
+                      int r);
+    void cutCone(int Xc, int Yc, int Z0, int Z1,
+                      int r);
     void putToriod(int Xc, int Yc, int Zc,
                     int Rt, int Rp);
     void cutToriod(int Xc, int Yc, int Zc,

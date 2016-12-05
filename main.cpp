@@ -6,24 +6,26 @@ int main(){
   Sculptor sculptor;
 
   sculptor.setColor(10/255.0, 30/255.0, 200/255.0, 1.0);
-  sculptor.putBox(0, 50, 0, 50, 0, 50);
-  sculptor.cutBox(1, 49, 1, 49, 1, 49);
+  // sculptor.putBox(0, 50, 0, 50, 0, 50);
+  // sculptor.cutBox(1, 49, 1, 49, 1, 49);
+  //
+  //
+  // sculptor.getSolidAt(0).rotate(M_PI_2 / 10, X);
+  // sculptor.getSolidAt(0).rotate(M_PI_2 / 2, Y);
+  //
+  //
+  // sculptor.getSolidAt(1).rotate(M_PI_2 / 10, X);
+  // sculptor.getSolidAt(1).rotate(M_PI_2 / 2, Y);
+  //
+  // sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
+  //
+  // sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
+  // sculptor.putBox(10, 40, 10, 40, 10, 40);
+  //
+  // sculptor.getSolidAt(2).rotate(M_PI_2 / 10, X);
+  // sculptor.getSolidAt(2).rotate(M_PI_2 / 2, Y);
 
-
-  sculptor.getSolidAt(0).rotate(M_PI_2 / 10, X);
-  sculptor.getSolidAt(0).rotate(M_PI_2 / 2, Y);
-
-
-  sculptor.getSolidAt(1).rotate(M_PI_2 / 10, X);
-  sculptor.getSolidAt(1).rotate(M_PI_2 / 2, Y);
-
-  sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
-
-  sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);
-  sculptor.putBox(10, 40, 10, 40, 10, 40);
-
-  sculptor.getSolidAt(2).rotate(M_PI_2 / 10, X);
-  sculptor.getSolidAt(2).rotate(M_PI_2 / 2, Y);
+  sculptor.putCone(0, 0, 0, 10, 20);
 
 
 

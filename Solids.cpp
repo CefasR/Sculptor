@@ -203,6 +203,56 @@ inline POS_3D <int> Cylinder::getLimMin() const {
   return POS_3D <int> ( pos.x - radius, pos.y - (height / 2.0), pos.z - radius );
 }
 
+
+void Cone::sculpt(Canvas& c) const
+{
+  // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
+  // até as respectivas posições do centro acrescidas ao respectivo raio
+
+  cout << "Sculpting a Cone..." << endl;
+
+    for (int i = getMinX(); i < getMaxX(); i++) {
+      for (int j = getMinY(); j < getMaxY(); j++) {
+        for (int k = getMinZ(); k < getMaxZ(); k++) {
+            // Verifica se o ponto faz parte do cilindro
+            if ((pow(i - pos.x, 2) / pow (x_radius, 2) + pow(j - pos.y, 2) / pow(y_radius, 2) ) < pow(k - pos.z, 2) / pow(height, 2)){
+                POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
+                c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
+            }
+        }
+      }
+    }
+}
+
+
+int Cone::getMaxX() const {
+  return (pos.x + x_radius);
+}
+int Cone::getMaxY() const {
+  return (pos.y + y_radius);
+}
+int Cone::getMaxZ() const {
+  return (pos.z - height / 2.0);
+}
+int Cone::getMinX() const {
+  return (pos.x - x_radius);
+}
+int Cone::getMinY() const {
+  return (pos.y - y_radius);
+}
+int Cone::getMinZ() const {
+  return (pos.z - height / 2.0);
+}
+
+inline POS_3D <int> Cone::getLimMax() const {
+  return POS_3D <int> ( pos.x + x_radius, pos.y + y_radius, pos.z + height / 2.0 );
+}
+
+inline POS_3D <int> Cone::getLimMin() const {
+  return POS_3D <int> ( pos.x - x_radius, pos.y - y_radius, pos.z - height / 2.0 );
+}
+
+
 void Ellipsoid::sculpt(Canvas& c) const{
 
   cout << "Sculpting a Ellipsoid..." << endl;
