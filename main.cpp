@@ -54,7 +54,6 @@ int main(){
   sculptor.putCylinder(8, 0, -12, -19, 5);
 
   sculptor.putCylinder(0, 0, 0, 10 , 21);
->>>>>>> ed0aab119d3b28dc71ec96e17fd54c52c2e6c395
 
   // //Sapatos
   sculptor.setColor(0.0,0.0,0.0, 1.0);
