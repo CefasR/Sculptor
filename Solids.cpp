@@ -276,13 +276,13 @@ void Cone::sculpt(Canvas& c) const
 {
   // Varia i, j, k das respctivas posições do centro (X, Y, Z) menos o respectivo raio (RX, RY, RZ)
   // até as respectivas posições do centro acrescidas ao respectivo raio
-
+POS_3D <int> minP = getLimMin(), maxP = getLimMax();
   cout << "Sculpting a Cone..." << endl;
-    for (int i = getMinX(); i < getMaxX(); i++) {
-      for (int j = getMinY(); j < getMaxY(); j++) {
-        for (int k = getMinZ(); k < getMaxZ(); k++) {
+    for (float i = minP.x; i <= maxP.x; i += 0.5) {
+      for (float j = minP.y; j <= maxP.y; j += 0.5) {
+        for (float k = minP.z; k <= maxP.z; k += 0.5) {
             // Verifica se o ponto faz parte do cilindro
-            if ( pow(i - pos.x, 2) + pow(j - pos.y, 2) < pow((height - (k - getMinZ() )) * (x_radius / height), 2) ) {
+            if ( pow(i - pos.x, 2) + pow(j - pos.y, 2) < pow((height - (k - minP.z )) * (x_radius / height), 2) ) {
                 POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
                 c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
             }
@@ -293,22 +293,88 @@ void Cone::sculpt(Canvas& c) const
 
 
 int Cone::getMaxX() const {
-  return (pos.x + x_radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) max = current.x;
+            if (current.x > max) max = current.x;
+          }
+        }
+      }
+  return max + 1;
 }
 int Cone::getMaxY() const {
-  return (pos.y + y_radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) max = current.y;
+            if (current.y > max) max = current.y;
+          }
+        }
+      }
+  return max + 1;
 }
 int Cone::getMaxZ() const {
-  return (pos.z + height / 2.0);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int max;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) max = current.z;
+            if (current.z > max) max = current.z;
+          }
+        }
+      }
+  return max + 1;
 }
 int Cone::getMinX() const {
-  return (pos.x - x_radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) min = current.x;
+            if (current.x < min) min = current.x;
+          }
+        }
+      }
+  return min;
 }
 int Cone::getMinY() const {
-  return (pos.y - y_radius);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) min = current.y;
+            if (current.y < min) min = current.y;
+          }
+        }
+      }
+  return min;
 }
 int Cone::getMinZ() const {
-  return (pos.z - height / 2.0);
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+    int min;
+      for (int i = minP.x; i <= maxP.x; i++) {
+        for (int j = minP.y; j <= maxP.y; j++) {
+          for (int k = minP.z; k <= maxP.z; k++) {
+            POS_3D <float> current = round(TM.transform(POS_3D <float> (i, j, k)));
+            if (i == pos.x - x_radius && j == pos.y - x_radius && k == pos.z - height / 2.0) min = current.z;
+            if (current.z < min) min = current.z;
+          }
+        }
+      }
+  return min;
 }
 
 inline POS_3D <int> Cone::getLimMax() const {
@@ -347,7 +413,7 @@ void Ellipsoid::sculpt(Canvas& c) const{
 }
 
 int Ellipsoid::getMaxX() const {
-    POS_3D <int> minP = getLimMin(), maxP = getLimMax();
+  POS_3D <int> minP = getLimMin(), maxP = getLimMax();
     int max;
       for (int i = minP.x; i <= maxP.x; i++) {
         for (int j = minP.y; j <= maxP.y; j++) {
