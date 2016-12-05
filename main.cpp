@@ -25,7 +25,7 @@ int main(){
   // sculptor.getSolidAt(2).rotate(M_PI_2 / 10, X);
   // sculptor.getSolidAt(2).rotate(M_PI_2 / 2, Y);
 
-  sculptor.putCone(0, 0, 0, 10, 20);
+  sculptor.putCone(0, 0, 0, 30, 20);
 
 
 

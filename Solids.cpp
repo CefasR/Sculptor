@@ -210,12 +210,11 @@ void Cone::sculpt(Canvas& c) const
   // até as respectivas posições do centro acrescidas ao respectivo raio
 
   cout << "Sculpting a Cone..." << endl;
-
     for (int i = getMinX(); i < getMaxX(); i++) {
       for (int j = getMinY(); j < getMaxY(); j++) {
         for (int k = getMinZ(); k < getMaxZ(); k++) {
             // Verifica se o ponto faz parte do cilindro
-            if ((pow(i - pos.x, 2) / pow (x_radius, 2) + pow(j - pos.y, 2) / pow(y_radius, 2) ) < pow(k - pos.z, 2) / pow(height, 2)){
+            if ( pow(i - pos.x, 2) + pow(j - pos.y, 2) < pow((height - (k - getMinZ() )) * (x_radius / height), 2) ) {
                 POS_3D <float> p = TM.transform(POS_3D <float>(i,j,k));
                 c.at(c.getNormalPos(p.x, p.y, p.z)) = (*this);
             }
@@ -232,7 +231,7 @@ int Cone::getMaxY() const {
   return (pos.y + y_radius);
 }
 int Cone::getMaxZ() const {
-  return (pos.z - height / 2.0);
+  return (pos.z + height / 2.0);
 }
 int Cone::getMinX() const {
   return (pos.x - x_radius);

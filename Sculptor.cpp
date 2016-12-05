@@ -204,9 +204,9 @@ void Sculptor::cutToriod(int Xc, int Yc, int Zc, int Rt, int Rp) {
 }
 
 
-void Sculptor::putCylinder(int Xc, int Yc, int Z0, int Z1, int r) {
-  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, true, abs(r), abs(Z1 - Z0) ));
+void Sculptor::putCone(int Xc, int Yc, int Z0, int Z1, int r) {
+  l.push_back(new Cone(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, true, abs(r), abs(r), abs(Z1 - Z0) ));
 }
-void Sculptor::cutCylinder(int Xc, int Yc, int Z0, int Z1, int r) {
-  l.push_back(new Cylinder(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, false, abs(r), abs(Z1 - Z0) ));
+void Sculptor::cutCone(int Xc, int Yc, int Z0, int Z1, int r) {
+  l.push_back(new Cone(Xc, Yc, (Z0 + Z1) / 2.0, R, G, B, alpha, false, abs(r), abs(r), abs(Z1 - Z0) ));
 }
