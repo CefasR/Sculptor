@@ -177,13 +177,10 @@ POS_3D <int> Sculptor::getMaxXYZ() {
 void Sculptor::draw() {
   POS_3D <int> max = getMaxXYZ(), min = getMinXYZ();
   POS_3D <int> size = max - min;
-
   initialize(size.x, size.y, size.z, min.x, min.y, min.z);
-
   for (pSolidIterator i = l.begin(); i != l.end(); ++i){
     (*i)->sculpt(*this);
   }
-
   removeIrrelevantVoxels();
 
 }
