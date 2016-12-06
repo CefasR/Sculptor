@@ -53,6 +53,11 @@ public:
         return *(*i);
     }
 
+    inline Solid & getLastSolid(){
+
+        return *l.back();
+    }
+
     // Retorna a extremidade mínima
     POS_3D <int> getMinXYZ();
 

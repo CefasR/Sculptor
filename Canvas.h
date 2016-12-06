@@ -102,6 +102,18 @@ public:
     return *this = tmp;
   }
 
+  inline friend ostream & operator << (ostream & out, const TransformationMatrix & m ) {
+    for (unsigned i = 0; i < 4; i++) {
+      for (unsigned j = 0; j < 4; j++) {
+        out << m.m[i][j] << " ";
+      }
+
+      out << endl;
+    }
+
+    return out;
+  }
+
   inline const TransformationMatrix operator * (TransformationMatrix matrix) const {
     TransformationMatrix tmp(false);
     return tmp = (*this ) * matrix;

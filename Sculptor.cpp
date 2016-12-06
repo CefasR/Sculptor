@@ -91,12 +91,12 @@ void Sculptor::write(const char *Arq)
 
 void Sculptor::putVoxel(int X, int Y, int Z) {
   // Adiciona uma box com tamanho 1x1x1
-  l.push_back(new Box(X, Y, Z, R, G, B, alpha));
+  l.push_back(new Box(X + 1 / 2.0, Y + 1 / 2.0, Z + 1 / 2.0, R, G, B, alpha));
 }
 
 void Sculptor::cutVoxel(int X, int Y, int Z) {
   // Retira uma box com tamanho 1x1x1
-  l.push_back(new Box(X, Y, Z, 0.0, 0.0, 0.0, 0.0, false));
+  l.push_back(new Box(X + 1 / 2.0, Y + 1 / 2.0, Z + 1 / 2.0, 0.0, 0.0, 0.0, 0.0, false, 1, 1, 1));
 }
 
 void Sculptor::putEllipsoid(int Xc, int Yc, int Zc, int Rx, int Ry, int Rz) {
