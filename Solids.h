@@ -9,8 +9,8 @@ protected:
   POS_3D <float> pos;
   TransformationMatrix TM;
 
-  virtual POS_3D <int> getLimMin() const = 0;
-  virtual POS_3D <int> getLimMax() const = 0;
+  virtual POS_3D <float> getLimMin() const = 0;
+  virtual POS_3D <float> getLimMax() const = 0;
 
 public:
   inline Solid (
@@ -19,7 +19,7 @@ public:
     float z=0.0,
     float r=0.0, float g=0.0, float b=0.0, float a=1.0,
     bool on=true
-    ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on){}
+  ) : pos(x, y, z), Voxel::Voxel (r, g, b, a, on) { }
 
   // Método virtual para sculpt o Solid
   virtual void sculpt(Canvas& c) const = 0;
@@ -32,16 +32,16 @@ public:
   }
 
   inline void rotate(float angle, AXIS a) {
-    TM = TranslationMatrix(-pos) * RotationMatrix(angle, a) * TranslationMatrix(pos) * TM;
+    TM = TranslationMatrix(pos) * RotationMatrix(angle, a) * TranslationMatrix(-pos) * TM;
   }
 
-  virtual int getMaxX() const = 0;
-  virtual int getMaxY() const = 0;
-  virtual int getMaxZ() const = 0;
+  int getMaxX() const;
+  int getMaxY() const;
+  int getMaxZ() const;
 
-  virtual int getMinX() const = 0;
-  virtual int getMinY() const = 0;
-  virtual int getMinZ() const = 0;
+  int getMinX() const;
+  int getMinY() const;
+  int getMinZ() const;
 
   inline void setColor(float r, float g, float b) {
     R = r; G = g; B = b;
@@ -57,8 +57,8 @@ public:
 
 class Box : public Solid {
 protected:
-  inline POS_3D <int> getLimMin() const;
-  inline POS_3D <int> getLimMax() const;
+  POS_3D <float> getLimMin() const;
+  POS_3D <float> getLimMax() const;
 
   unsigned int width, length, height;
 public:
@@ -75,20 +75,12 @@ public:
 
   // sculpt a Solid
   void sculpt(Canvas& c) const;
-
-  int getMaxX() const;
-  int getMaxY() const;
-  int getMaxZ() const;
-
-  int getMinX() const;
-  int getMinY() const;
-  int getMinZ() const;
 };
 
 class Cylinder : public Solid{
 protected:
-  POS_3D <int> getLimMin() const;
-  POS_3D <int> getLimMax() const;
+  POS_3D <float> getLimMin() const;
+  POS_3D <float> getLimMax() const;
 
   float radius, height;
 public:
@@ -104,20 +96,12 @@ public:
   ) : Solid(x, y, z, r, g, b, a, on), radius(rad), height(h) {}
 
   void sculpt(Canvas& c) const;
-
-  int getMaxX() const;
-  int getMaxY() const;
-  int getMaxZ() const;
-
-  int getMinX() const;
-  int getMinY() const;
-  int getMinZ() const;
 };
 
 class Ellipsoid : public Solid{
 protected:
-  POS_3D <int> getLimMin() const;
-  POS_3D <int> getLimMax() const;
+  POS_3D <float> getLimMin() const;
+  POS_3D <float> getLimMax() const;
 
   float x_radius, y_radius, z_radius;
 public:
@@ -133,20 +117,12 @@ public:
       ) : Solid(x, y, z, r, g, b, a, on), x_radius(rx), y_radius(ry), z_radius(rz){}
 
       void sculpt(Canvas& c) const;
-
-      int getMaxX() const;
-      int getMaxY() const;
-      int getMaxZ() const;
-
-      int getMinX() const;
-      int getMinY() const;
-      int getMinZ() const;
 };
 
 class Toroid : public Solid {
 protected:
-  POS_3D <int> getLimMin() const;
-  POS_3D <int> getLimMax() const;
+  POS_3D <float> getLimMin() const;
+  POS_3D <float> getLimMax() const;
 
   float t_radius, p_radius;
 public:
@@ -162,20 +138,12 @@ public:
       ) : Solid(x, y, z, r, g, b, a, on), t_radius(tR), p_radius(pR) {}
 
       void sculpt(Canvas& c) const;
-
-      int getMaxX() const;
-      int getMaxY() const;
-      int getMaxZ() const;
-
-      int getMinX() const;
-      int getMinY() const;
-      int getMinZ() const;
 };
 
 class Cone : public Solid {
 protected:
-  POS_3D <int> getLimMin() const;
-  POS_3D <int> getLimMax() const;
+  POS_3D <float> getLimMin() const;
+  POS_3D <float> getLimMax() const;
 
   float x_radius, y_radius, height;
 public:
@@ -191,14 +159,6 @@ public:
   ) : Solid(x, y, z, r, g, b, a, on), x_radius(xR), y_radius(yR), height(h) {}
 
   void sculpt(Canvas& c) const;
-
-  int getMaxX() const;
-  int getMaxY() const;
-  int getMaxZ() const;
-
-  int getMinX() const;
-  int getMinY() const;
-  int getMinZ() const;
 };
 
 typedef Solid *pSolid;
