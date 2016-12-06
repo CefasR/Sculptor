@@ -27,12 +27,17 @@ public:
   inline void translate(float x, float y, float z) {
     TM = TranslationMatrix(POS_3D <float>(x, y, z)) * TM;
   }
+
   inline void rotate(float angle, AXIS a, int x, int y, int z) {
     TM = RotationMatrix(angle, a) * TM;
   }
 
   inline void rotate(float angle, AXIS a) {
     TM = TranslationMatrix(pos) * RotationMatrix(angle, a) * TranslationMatrix(-pos) * TM;
+  }
+
+  inline void scale(float v) {
+    TM = ScaleMatrix(v) * TM;
   }
 
   int getMaxX() const;

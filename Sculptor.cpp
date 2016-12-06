@@ -91,7 +91,7 @@ void Sculptor::write(const char *Arq)
 
 void Sculptor::putVoxel(int X, int Y, int Z) {
   // Adiciona uma box com tamanho 1x1x1
-  l.push_back(new Box(X + 1 / 2.0, Y + 1 / 2.0, Z + 1 / 2.0, R, G, B, alpha));
+  l.push_back(new Box(X + 1 / 2.0, Y + 1 / 2.0, Z + 1 / 2.0, R, G, B, alpha, true, 1, 1, 1));
 }
 
 void Sculptor::cutVoxel(int X, int Y, int Z) {
@@ -175,6 +175,13 @@ POS_3D <int> Sculptor::getMaxXYZ() {
 }
 
 void Sculptor::draw() {
+  // Aplica a escala em toda as formas
+  if (scale != 1.0) {
+    for (pSolidIterator i = l.begin(); i != l.end(); ++i){
+      (*i)->scale(scale);
+    }
+  }
+
   POS_3D <int> max = getMaxXYZ(), min = getMinXYZ();
   POS_3D <int> size = max - min;
 

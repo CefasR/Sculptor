@@ -11,10 +11,10 @@ typedef list <pSolid>::iterator pSolidIterator;
 class Sculptor : protected Canvas {
 private:
     list <pSolid> l;
-    float R, G, B, alpha;
+    float R, G, B, alpha, scale;
 public:
 
-    inline Sculptor(float r=0.0, float g=0.0, float b=0.0, float a=1.0) : Canvas::Canvas(), R(r), G(g), B(b), alpha(a) {}
+    explicit inline Sculptor(float sc=1.0) : Canvas::Canvas(), R(0.0), G(0.0), B(0.0), alpha(1.0), scale(sc) { }
 
     void setColor(float R, float G, float B, float A) { this->R = R; this->G = G; this->B = B; alpha = A; };
     void putVoxel(int X, int Y, int Z);
@@ -45,6 +45,10 @@ public:
                     int Rt, int Rp);
     void cleanVoxels(void);
     void write(const char *Arq);
+
+    void setScale(float v) {
+      scale = abs(v);
+    }
 
 
     inline Solid & getSolidAt(unsigned n){

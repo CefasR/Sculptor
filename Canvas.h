@@ -57,6 +57,10 @@ struct POS_3D {
     return (x == pos.x && y == pos.y && z == pos.z);
   }
 
+  inline bool operator < (POS_3D pos) {
+    return (x < pos.x && y < pos.y && z < pos.z);
+  }
+
   inline bool operator != (POS_3D pos) {
     return ! (*this == pos);
   }
@@ -137,6 +141,13 @@ public:
   }
 };
 
+class ScaleMatrix : public TransformationMatrix {
+public:
+  inline explicit ScaleMatrix (float v) : TransformationMatrix(){
+    m[3][3] = 0; m[0][0] *= v; m[1][1] *= v; m[2][2] *= v;
+  }
+};
+
 
 class RotationMatrix : public TransformationMatrix {
 public:
@@ -191,6 +202,16 @@ public:
         i * dimY * dimZ +
         j * dimZ + k
       );
+  }
+
+  // Retorna as coordenadas da posição máxima do Canvas
+  inline POS_3D <int> getMaxPos() const {
+    return minXYZ + POS_3D <int> (dimX, dimY, dimZ);
+  }
+
+  // Retorna as coordenadas da posição mínima do Canvas
+  inline POS_3D <int> getMinPos() const {
+    return minXYZ;
   }
 
   // Retorna o elemento da posição espefificada
