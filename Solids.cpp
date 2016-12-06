@@ -263,7 +263,6 @@ void Toroid::sculpt(Canvas& c) const{
         }
       }
 }
-
 inline POS_3D <float> Toroid::getLimMax() const {
   return POS_3D <int> (pos.x + p_radius + t_radius, pos.y + p_radius + t_radius, pos.z + p_radius + t_radius);
 }
