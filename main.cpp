@@ -69,11 +69,11 @@ int main(){
 
   sculptor.cutBox(-20, 20, 1, 9, -14, 14);
 
-  // Alça Macacão
-  sculptor.putEllipsoid(-7, -12, 0,  5, 6 ,5);
+  // Pernas
+  sculptor.putEllipsoid(-7, -12, 0,  4, 6 , 4);
   sculptor.getLastSolid().rotate(M_PI_4 / 5, Z);
 
-  sculptor.putEllipsoid(7, -12, 0,  5, 6 ,5);
+  sculptor.putEllipsoid(7, -12, 0,  4, 6 ,4);
   sculptor.getLastSolid().rotate(-M_PI_4 / 5, Z);
 
   // Botões
@@ -117,7 +117,7 @@ int main(){
 
   // Alça do macacão
   sculptor.setColor(10/255.0, 30/255.0, 200/255.0, 1.0);
-  sculptor.putToriod(5, 7, 0, 14, 1);
+  sculptor.putToriod(5, 7, 0, 15, 1);
   sculptor.getLastSolid().rotate(-M_PI_2, X);
   sculptor.getLastSolid().rotate(-M_PI_2 / 5, Z);
 
@@ -131,10 +131,10 @@ int main(){
   sculptor.getLastSolid().rotate( M_PI_2, X);
 
 
-  // Correção
+  // Correção do bolso
   sculptor.setColor(10/255.0, 30/255.0, 200/255.0, 1.0);
-  sculptor.putBox(-6, 7, 4, 9, 18, 19);
-  sculptor.cutBox(-6, 7, 9, 12, 18, 19);
+  sculptor.putBox(-7, 7, 4, 9, 18, 19);
+  sculptor.cutBox(-7, 7, 9, 12, 18, 19);
 
   // Braço esquedo
   sculptor.setColor(241/255.0, 196/255.0, 15/255.0, 1.0);

@@ -145,9 +145,9 @@ void Cylinder::sculpt(Canvas& c) const
   cout << "Sculpting a Cylinder..." << endl;
   POS_3D <float> minP = getLimMin(), maxP = getLimMax();
 
-  for (float i = minP.x; i < maxP.x; i += 1) {
-    for (float j = minP.y; j < maxP.y; j += 1) {
-      for (float k = minP.z; k < maxP.z; k += 1) {
+  for (float i = minP.x; i < maxP.x - 0.5; i += 0.5) {
+    for (float j = minP.y; j < maxP.y - 0.5; j += 0.5) {
+      for (float k = minP.z; k < maxP.z -0.5 ; k += 0.5) {
         // Verifica se o ponto faz parte do cilindro
           if ((pow(i - pos.x, 2) + pow( k - pos.z, 2)) < pow(radius, 2)){
               POS_3D <float> p = round( TM.transform(POS_3D <float>(i,j,k)) );
@@ -208,9 +208,9 @@ void Ellipsoid::sculpt(Canvas& c) const{
   cout << "Sculpting a Ellipsoid..." << endl;
   POS_3D <float> minP = getLimMin(), maxP = getLimMax();
 
-  for (float i = minP.x; i < maxP.x; i += 1) {
-    for (float j = minP.y; j < maxP.y; j += 1) {
-      for (float k = minP.z; k < maxP.z; k += 1) {
+  for (float i = minP.x; i < maxP.x - 0.5; i += 0.5) {
+    for (float j = minP.y; j < maxP.y - 0.5; j += 0.5) {
+      for (float k = minP.z; k < maxP.z - 0.5; k += 0.5) {
           // Verifica se o ponto faz parte do elipsoide
         if (
           pow(float(i) - pos.x, 2) / pow(x_radius, 2) +
